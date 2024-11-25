@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
 import { useAtom } from 'jotai';
-import { themeAtom } from '../store/atoms';
+import { Text, View } from 'react-native';
+
 import { Button } from '@rneui/themed';
+
+import { themeAtom } from '../store/atoms';
 
 const SettingsScreen = () => {
   const [theme, setTheme] = useAtom(themeAtom);

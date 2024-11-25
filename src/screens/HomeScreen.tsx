@@ -1,18 +1,15 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent } from 'react';
 
-import { styled, useTailwind } from "nativewind";
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
+import { styled, useTailwind } from 'nativewind';
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
 
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Button } from "@rneui/themed";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Button } from '@rneui/themed';
 
-import { RootStackParamList } from "../navigation/types";
+import { RootStackParamList } from '../navigation/types';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Home"
->;
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const StyledButton = styled(Button as FunctionComponent) as typeof Button;
 
@@ -20,7 +17,7 @@ const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const btnStyle = StyleSheet.flatten(
     useTailwind({
-      className: "mb-8",
+      className: 'mb-8',
     })
   ) as ViewStyle;
 
@@ -29,12 +26,12 @@ const HomeScreen = () => {
       <Text className="text-2xl font-bold mb-20">Welcome Home</Text>
       <Button
         title="Go to Profile"
-        onPress={() => navigation.navigate("Profile", { userId: "1" })}
+        onPress={() => navigation.navigate('Profile', { userId: '1' })}
         containerStyle={btnStyle}
       />
       <StyledButton
         title="Go to Settings"
-        onPress={() => navigation.navigate("Settings")}
+        onPress={() => navigation.navigate('Settings')}
         className="mt-10"
       />
     </View>

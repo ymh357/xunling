@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
+
+import { Text, View } from 'react-native';
+
+import { RouteProp, useRoute } from '@react-navigation/native';
+
 import { RootStackParamList } from '../navigation/types';
 
 type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Profile'>;
