@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 
-import { useTailwind } from "nativewind";
+import { styled, useTailwind } from "nativewind";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -13,6 +13,8 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Home"
 >;
+
+const StyledButton = styled(Button as FunctionComponent) as typeof Button;
 
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -30,9 +32,10 @@ const HomeScreen = () => {
         onPress={() => navigation.navigate("Profile", { userId: "1" })}
         containerStyle={btnStyle}
       />
-      <Button
+      <StyledButton
         title="Go to Settings"
         onPress={() => navigation.navigate("Settings")}
+        className="mt-10"
       />
     </View>
   );
