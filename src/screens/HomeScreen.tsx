@@ -8,6 +8,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button } from '@rneui/themed';
 
 import { RootStackParamList } from '../navigation/types';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -24,6 +25,8 @@ const HomeScreen = () => {
   return (
     <View className="flex-1 items-center justify-center bg-white">
       <Text className="text-2xl font-bold mb-20">Welcome Home</Text>
+      <Icon name="heart" size={24} color="red" />
+
       <Button
         title="Go to Profile"
         onPress={() => navigation.navigate('Profile', { userId: '1' })}
