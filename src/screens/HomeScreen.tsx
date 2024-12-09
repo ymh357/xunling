@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { styled, useTailwind } from 'nativewind';
 import { StyleSheet, Text, View, ViewStyle, TouchableOpacity } from 'react-native';
-
+import clsx from 'clsx';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button } from '@rneui/themed';
@@ -28,9 +28,14 @@ const HomeScreen = () => {
       <Text className="text-2xl font-bold mb-20">Welcome Home</Text>
       <Icon name="heart" size={24} color="red" />
       <PlaceholderPreview
-        renderPlaceholder={onClick => (
+        renderPlaceholder={(onClick, compReady) => (
           <TouchableOpacity onPress={() => onClick()}>
-            <View className="h-40 w-40 bg-red-50">
+            <View
+              className={clsx('h-40 w-40', {
+                ['bg-red-200']: !compReady,
+                ['bg-green-200']: compReady,
+              })}
+            >
               <Text>placeholder</Text>
             </View>
           </TouchableOpacity>
