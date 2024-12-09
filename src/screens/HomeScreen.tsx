@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
 import { styled, useTailwind } from 'nativewind';
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View, ViewStyle, TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import { Button } from '@rneui/themed';
 
 import { RootStackParamList } from '../navigation/types';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PlaceholderPreview from '@/components/PlaceholderPreview';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -26,7 +27,23 @@ const HomeScreen = () => {
     <View className="flex-1 items-center justify-center bg-white">
       <Text className="text-2xl font-bold mb-20">Welcome Home</Text>
       <Icon name="heart" size={24} color="red" />
-
+      <PlaceholderPreview
+        renderPlaceholder={onClick => (
+          <TouchableOpacity onPress={() => onClick()}>
+            <View className="h-40 w-40 bg-red-50">
+              <Text>placeholder</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      >
+        {onClick => (
+          <TouchableOpacity onPress={onClick}>
+            <View className="h-40 w-40 bg-blue-50">
+              <Text>real comp</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      </PlaceholderPreview>
       <Button
         title="Go to Profile"
         onPress={() => navigation.navigate('Profile', { userId: '1' })}
