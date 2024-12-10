@@ -3,17 +3,14 @@ import React, { FunctionComponent } from 'react';
 import { styled, useTailwind } from 'nativewind';
 import { StyleSheet, Text, View, ViewStyle, TouchableOpacity } from 'react-native';
 import clsx from 'clsx';
-import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/themed';
 
-import { RootStackParamList } from '../navigation/types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PlaceholderPreview from '@/components/PlaceholderPreview';
 
 const StyledButton = styled(Button as FunctionComponent) as typeof Button;
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const btnStyle = StyleSheet.flatten(
     useTailwind({
       className: 'mb-8',
@@ -46,11 +43,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
         )}
       </PlaceholderPreview>
-      <Button
-        title="Go to Profile"
-        onPress={() => navigation.navigate('Profile', { userId: '1' })}
-        containerStyle={btnStyle}
-      />
+      <Button title="Go to Profile" onPress={() => {}} containerStyle={btnStyle} />
       <StyledButton title="Go to Settings" onPress={() => {}} className="mt-10" />
     </View>
   );
