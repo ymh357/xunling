@@ -1,24 +1,34 @@
 import React, { ReactNode, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, ViewStyle } from 'react-native';
 
 import { Overlay } from '@rneui/themed';
+import { useTailwind } from 'nativewind';
 
 const PlaceholderPreview = ({
   children,
   renderPlaceholder,
+  showActualComp,
 }: {
   children?: (onClick: () => void) => ReactNode;
   renderPlaceholder: (onClick: () => void, compReady: boolean) => ReactNode;
+  showActualComp?: boolean;
 }) => {
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
     setVisible(!visible);
   };
-  return (
+  const overlayStyle = StyleSheet.flatten(
+    useTailwind({
+      className: 'p-0',
+    })
+  ) as ViewStyle;
+  return showActualComp && children ? (
+    children(toggleOverlay)
+  ) : (
     <>
       {renderPlaceholder(toggleOverlay, !!children)}
-      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+      <Overlay overlayStyle={overlayStyle} isVisible={visible} onBackdropPress={toggleOverlay}>
         {children ? (
           children(toggleOverlay)
         ) : (
