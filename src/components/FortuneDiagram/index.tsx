@@ -1,41 +1,47 @@
 import React from 'react';
-import PlaceholderPreview from '../PlaceholderPreview';
-import { TouchableOpacity, View, Text } from 'react-native';
-import clsx from 'clsx';
+import { View, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDirectionGuidance } from '@/store/home';
 
-const Skeleton = () => {
+const Skeleton = () => (
+  <View className="bg-white/80 rounded-lg p-4">
+    <View className="flex-row items-center mb-4">
+      <View className="w-6 h-6 rounded-full bg-[#8B4513]/20" />
+      <View className="w-20 h-6 ml-2 rounded bg-[#8B4513]/20" />
+    </View>
+
+    <View className="bg-[#8B4513]/10 rounded-lg p-3">
+      <View className="flex-row items-center mb-2">
+        <View className="w-16 h-5 rounded bg-[#8B4513]/20" />
+        <View className="w-8 h-5 ml-2 rounded bg-[#8B4513]/20" />
+      </View>
+      <View className="w-full h-12 rounded bg-[#8B4513]/20" />
+    </View>
+  </View>
+);
+
+const FortuneDiagram = () => {
+  const { data, isLoading } = useDirectionGuidance();
+
+  if (isLoading || !data) {
+    return <Skeleton />;
+  }
+
   return (
-    <View className="w-full h-[30vh] flex items-center justify-center">
-      <Text className=" text-center">运势柱状图</Text>
+    <View className="bg-white/80 rounded-lg p-4">
+      <View className="flex-row items-center mb-3">
+        <Icon name="compass" size={20} color="#8B4513" />
+        <Text className="text-[#8B4513] font-medium ml-2">吉位趋向</Text>
+      </View>
+
+      <View className="bg-[#8B4513]/10 rounded-lg p-3">
+        <Text className="text-[#8B4513]/80 mb-2">
+          今日宜往：<Text className="font-medium">{data.direction}</Text>
+        </Text>
+        <Text className="text-[#8B4513]/70 text-sm leading-6">{data.description}</Text>
+      </View>
     </View>
   );
 };
 
-const ActualComp = () => {
-  return null;
-};
-
-export default function () {
-  return (
-    <PlaceholderPreview
-      renderPlaceholder={(onClick, compReady) => (
-        <TouchableOpacity onPress={() => onClick()}>
-          <View
-            className={clsx({
-              ['bg-red-200']: !compReady,
-              ['bg-green-200']: compReady,
-            })}
-          >
-            <Skeleton />
-          </View>
-        </TouchableOpacity>
-      )}
-    >
-      {/* {onClick => (
-        <TouchableOpacity onPress={onClick}>
-          <ActualComp />
-        </TouchableOpacity>
-      )} */}
-    </PlaceholderPreview>
-  );
-}
+export default FortuneDiagram;

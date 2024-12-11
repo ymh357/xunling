@@ -70,13 +70,30 @@ const ActualComp = () => {
   );
 };
 
-const Skeleton = () => {
-  return (
-    <View className="w-full h-[10vh] flex items-center justify-center">
-      <Text className=" text-center">出生信息填写入口（档案）</Text>
+const Skeleton = () => (
+  <View className="bg-white/80 rounded-lg p-4">
+    <View className="flex-row items-center mb-4">
+      <View className="w-6 h-6 rounded-full bg-[#8B4513]/20" />
+      <View className="w-24 h-6 ml-2 rounded bg-[#8B4513]/20" />
     </View>
-  );
-};
+
+    <View className="space-y-4">
+      {[1, 2, 3].map(item => (
+        <View key={item} className="space-y-2">
+          <View className="w-20 h-5 rounded bg-[#8B4513]/20" />
+          <View className="w-full h-12 rounded-lg bg-[#8B4513]/10">
+            <View className="w-32 h-6 m-3 rounded bg-[#8B4513]/20" />
+          </View>
+        </View>
+      ))}
+
+      <View className="flex-row justify-between mt-6">
+        <View className="w-24 h-10 rounded-lg bg-[#8B4513]/20" />
+        <View className="w-24 h-10 rounded-lg bg-[#8B4513]/20" />
+      </View>
+    </View>
+  </View>
+);
 
 export default function () {
   return (

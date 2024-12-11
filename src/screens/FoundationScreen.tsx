@@ -1,31 +1,22 @@
-import Bazi from '@/components/Bazi';
-import FiveElements from '@/components/FiveElements';
-import Lunar from '@/components/Lunar';
-import Search from '@/components/Search';
-import SolarTerms from '@/components/SolarTerms';
 import React from 'react';
-
-import { View } from 'react-native';
+import { ScrollView, View, SafeAreaView } from 'react-native';
+import WuXing from '@/components/Foundation/WuXing';
+import Zodiac from '@/components/Foundation/Zodiac';
+import BaZi from '@/components/Foundation/BaZi';
+import Terms from '@/components/Foundation/Terms';
 
 const FoundationScreen = () => {
   return (
-    <View className="flex h-full ">
-      <View>
-        <Search />
-      </View>
-      <View className="mt-2">
-        <Lunar />
-      </View>
-      <View className="mt-2">
-        <SolarTerms />
-      </View>
-      <View className="mt-2">
-        <Bazi />
-      </View>
-      <View className="mt-2">
-        <FiveElements />
-      </View>
-    </View>
+    <SafeAreaView className="flex-1 bg-[#FDF5E6]">
+      <ScrollView className="flex-1">
+        <View className="flex p-4 space-y-4">
+          <WuXing />
+          <Zodiac />
+          <BaZi />
+          <Terms />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

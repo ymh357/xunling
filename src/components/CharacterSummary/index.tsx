@@ -6,13 +6,53 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import clsx from 'clsx';
 import PlaceholderPreview from '../PlaceholderPreview';
 
-const Skeleton = () => {
-  return (
-    <View className="w-full h-[10vh] flex items-center justify-center">
-      <Text className="text-center">人格概览（加载中...）</Text>
+const Skeleton = () => (
+  <View className="bg-white/80 rounded-lg p-4">
+    <View className="flex-row items-center mb-4">
+      <View className="w-6 h-6 rounded-full bg-[#8B4513]/20" />
+      <View className="w-24 h-6 ml-2 rounded bg-[#8B4513]/20" />
     </View>
-  );
-};
+
+    <View className="space-y-4">
+      {/* 命格概述 */}
+      <View className="bg-[#8B4513]/10 rounded-lg p-3">
+        <View className="w-20 h-5 mb-2 rounded bg-[#8B4513]/20" />
+        <View className="w-full h-20 rounded bg-[#8B4513]/20" />
+      </View>
+
+      {/* 五行属性 */}
+      <View className="bg-[#8B4513]/10 rounded-lg p-3">
+        <View className="w-20 h-5 mb-3 rounded bg-[#8B4513]/20" />
+        <View className="flex-row flex-wrap">
+          {[1, 2, 3, 4, 5].map(item => (
+            <View key={item} className="w-1/5 items-center mb-2">
+              <View className="w-8 h-8 rounded-full bg-[#8B4513]/20" />
+              <View className="w-12 h-4 mt-1 rounded bg-[#8B4513]/20" />
+            </View>
+          ))}
+        </View>
+      </View>
+
+      {/* 性格特点 */}
+      <View className="bg-[#8B4513]/10 rounded-lg p-3">
+        <View className="w-20 h-5 mb-3 rounded bg-[#8B4513]/20" />
+        <View className="flex-row flex-wrap">
+          {[1, 2, 3, 4].map(item => (
+            <View key={item} className="bg-[#8B4513]/20 rounded-full px-4 py-1 mr-2 mb-2">
+              <View className="w-16 h-4 rounded bg-[#8B4513]/20" />
+            </View>
+          ))}
+        </View>
+      </View>
+
+      {/* 运势建议 */}
+      <View className="bg-[#8B4513]/10 rounded-lg p-3">
+        <View className="w-20 h-5 mb-2 rounded bg-[#8B4513]/20" />
+        <View className="w-full h-24 rounded bg-[#8B4513]/20" />
+      </View>
+    </View>
+  </View>
+);
 
 const ActualComp = () => {
   const [characterAnalysis] = useAtom(characterAnalysisAtom);
@@ -25,7 +65,7 @@ const ActualComp = () => {
           <Icon name="lock-outline" size={32} color="#8B4513" />
           <Text className="text-[#8B4513] text-lg font-medium text-center">请先填写生辰信息</Text>
           <Text className="text-[#8B4513]/70 text-sm text-center">
-            完善生辰信息���，即可查看您的命理性格分析
+            完善生辰信息，即可查看您的命理性格分析
           </Text>
         </View>
       </View>
