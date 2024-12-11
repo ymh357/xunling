@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import type { BirthInfo } from '@/store/profile';
-
+import RegionPicker from './RegionPicker';
 interface BirthInfoFormProps {
   visible: boolean;
   onClose: () => void;
@@ -13,20 +13,21 @@ interface BirthInfoFormProps {
 
 const BirthInfoForm = ({ visible, onClose, onSubmit, initialValues }: BirthInfoFormProps) => {
   const [birthDate, setBirthDate] = useState(initialValues?.birthDate || new Date());
-  const [birthPlace, setBirthPlace] = useState(initialValues?.birthPlace || '');
+  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const [showPicker, setShowPicker] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (visible && initialValues) {
-      setBirthDate(initialValues.birthDate);
-      setBirthPlace(initialValues.birthPlace);
+    if (visible && initialValues?.birthPlace) {
+      // 如果有初始值，解析成地区数组
+      const regions = initialValues.birthPlace.split(' ');
+      setSelectedRegions(regions);
     }
   }, [visible, initialValues]);
 
   const handleSubmit = async () => {
-    if (!birthPlace.trim()) {
-      // 可以添加错误提��
+    if (selectedRegions.length < 3) {
+      // 可以添加错误提示
       return;
     }
 
@@ -34,7 +35,7 @@ const BirthInfoForm = ({ visible, onClose, onSubmit, initialValues }: BirthInfoF
     try {
       await onSubmit({
         birthDate,
-        birthPlace: birthPlace.trim(),
+        birthPlace: selectedRegions.join(' '), // 将地区数组转换为字符串
         isComplete: true,
       });
     } finally {
@@ -93,26 +94,22 @@ const BirthInfoForm = ({ visible, onClose, onSubmit, initialValues }: BirthInfoF
               />
             )}
 
-            {/* 出生地点输入 */}
+            {/* 出生地点选择 */}
             <View>
-              <Text className="text-[#8B4513] mb-2 font-medium">填写出生地点</Text>
-              <View className="border border-[#8B4513]/30 rounded-lg bg-white/50">
-                <TextInput
-                  className="p-4"
-                  placeholder="请输入出生地���（具体到城市）"
-                  placeholderTextColor="#8B4513/50"
-                  value={birthPlace}
-                  onChangeText={setBirthPlace}
-                  editable={!isSubmitting}
-                />
-              </View>
+              <Text className="text-[#8B4513] mb-2 font-medium">选择出生地点</Text>
+              <RegionPicker value={selectedRegions} onChange={setSelectedRegions} />
+              {selectedRegions.length === 3 && (
+                <Text className="text-[#8B4513]/70 text-sm mt-2">
+                  已选择：{selectedRegions.join(' ')}
+                </Text>
+              )}
             </View>
 
             {/* 提交按钮 */}
             <TouchableOpacity
               className={`p-4 rounded-lg mt-6 ${isSubmitting ? 'bg-[#8B4513]/50' : 'bg-[#8B4513]'}`}
               onPress={handleSubmit}
-              disabled={isSubmitting || !birthPlace.trim()}
+              disabled={isSubmitting || selectedRegions.length < 3}
             >
               <Text className="text-[#FDF5E6] text-center font-bold">
                 {isSubmitting ? '提交中...' : '确认生辰信息'}
