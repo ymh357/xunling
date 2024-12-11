@@ -12,12 +12,27 @@ const Skeleton = () => {
 };
 
 const ActualComp = () => {
-  return null;
+  return (
+    <View className="space-y-4">
+      <Text className="text-lg font-bold text-[#8B4513]">命理设置</Text>
+      <View className="space-y-2">
+        <View className="flex-row justify-between items-center p-4 bg-[#8B4513]/5 rounded-lg">
+          <Text className="text-[#8B4513]">通知提醒</Text>
+          {/* 开关组件 */}
+        </View>
+        <View className="flex-row justify-between items-center p-4 bg-[#8B4513]/5 rounded-lg">
+          <Text className="text-[#8B4513]">每日运势</Text>
+          {/* 开关组件 */}
+        </View>
+      </View>
+    </View>
+  );
 };
 
 export default function () {
   return (
     <PlaceholderPreview
+      showActualComp
       renderPlaceholder={(onClick, compReady) => (
         <TouchableOpacity onPress={() => onClick()}>
           <View
@@ -31,11 +46,7 @@ export default function () {
         </TouchableOpacity>
       )}
     >
-      {/* {onClick => (
-        <TouchableOpacity onPress={onClick}>
-          <ActualComp />
-        </TouchableOpacity>
-      )} */}
+      <ActualComp />
     </PlaceholderPreview>
   );
 }

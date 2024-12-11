@@ -35,13 +35,9 @@ const HomeScreen = () => {
           </TouchableOpacity>
         )}
       >
-        {onClick => (
-          <TouchableOpacity onPress={onClick}>
-            <View className="h-40 w-40 bg-blue-50">
-              <Text>real comp</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        <View className="h-40 w-40 bg-blue-50">
+          <Text>real comp</Text>
+        </View>
       </PlaceholderPreview>
       <Button title="Go to Profile" onPress={() => {}} containerStyle={btnStyle} />
       <StyledButton title="Go to Settings" onPress={() => {}} className="mt-10" />

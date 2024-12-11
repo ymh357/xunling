@@ -9,7 +9,7 @@ const PlaceholderPreview = ({
   renderPlaceholder,
   showActualComp,
 }: {
-  children?: (onClick: () => void) => ReactNode;
+  children?: ReactNode;
   renderPlaceholder: (onClick: () => void, compReady: boolean) => ReactNode;
   showActualComp?: boolean;
 }) => {
@@ -24,13 +24,13 @@ const PlaceholderPreview = ({
     })
   ) as ViewStyle;
   return showActualComp && children ? (
-    children(toggleOverlay)
+    children
   ) : (
     <>
       {renderPlaceholder(toggleOverlay, !!children)}
       <Overlay overlayStyle={overlayStyle} isVisible={visible} onBackdropPress={toggleOverlay}>
         {children ? (
-          children(toggleOverlay)
+          children
         ) : (
           <TouchableOpacity onPress={toggleOverlay}>
             <View className="w-40 h-40 bg-blue-200">
