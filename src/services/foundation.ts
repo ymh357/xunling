@@ -43,7 +43,7 @@ const mockData = {
       { name: '木', icon: 'tree', color: 'bg-green-100', traits: '生长、向上' },
       { name: '水', icon: 'water', color: 'bg-blue-100', traits: '智慧、灵动' },
       { name: '火', icon: 'fire', color: 'bg-red-100', traits: '温暖、活力' },
-      { name: '土', icon: 'mountain', color: 'bg-amber-100', traits: '厚重、包容' },
+      { name: '土', icon: 'cube-outline', color: 'bg-amber-100', traits: '厚重、包容' },
     ],
   },
   zodiac: {
