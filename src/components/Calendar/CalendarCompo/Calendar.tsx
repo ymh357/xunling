@@ -73,7 +73,7 @@ export const CalendarComp: React.FC<{
       // calendarWidth={393}
       // Customize the appearance of the calendar
       style={{
-        height: 400,
+        height: 360,
       }}
       hideExtraDays={false}
       disableMonthChange={false}

@@ -16,8 +16,8 @@ export const CalendarCompo = (): React.JSX.Element => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#FDF5E6]">
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+    <SafeAreaView className="h-full bg-[#FDF5E6]">
+      <ScrollView className="h-full">
         <View>
           <CalendarComp initialDate={currentDate} onDateChange={onDateChanged} />
         </View>

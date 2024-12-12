@@ -8,9 +8,7 @@ import { View } from 'react-native';
 const CalendarScreen = () => {
   return (
     <View className="flex h-full ">
-      <View>
-        <Calendar />
-      </View>
+      <Calendar />
       <View className="mt-2">
         <DayFortuneAnalysis />
       </View>
