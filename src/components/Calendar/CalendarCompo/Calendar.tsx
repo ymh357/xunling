@@ -98,7 +98,7 @@ export const CalendarComp: React.FC<{
         return (
           <View style={styles.dayItem}>
             <OriginCompo date={date?.dateString} {...props} />
-            {mood && <Text style={styles.dayTag}>{mood}</Text>}
+            {!!mood && <Text style={styles.dayTag}>{mood}</Text>}
           </View>
         );
       }}

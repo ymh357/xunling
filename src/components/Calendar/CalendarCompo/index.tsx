@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { PluginPanel } from './PluginPanel';
 import { CalendarComp } from './Calendar';
 import dayjs from 'dayjs';
 import { getLunarInfo, getTodayInfo } from './util';
 
 export const CalendarCompo = (): React.JSX.Element => {
-  const isDarkMode = useColorScheme() === 'dark';
   const [currentDate, setCurrentDate] = useState(dayjs().format('YYYY-MM-DD'));
   const { lunarDate, lunarGanZhiDate, time } = getLunarInfo(currentDate);
   const { dayText, dateText, progressText } = getTodayInfo(currentDate);
@@ -25,17 +15,9 @@ export const CalendarCompo = (): React.JSX.Element => {
     setCurrentDate(date);
   };
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic" style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
+    <SafeAreaView className="flex-1 bg-[#FDF5E6]">
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           <CalendarComp initialDate={currentDate} onDateChange={onDateChanged} />
         </View>
