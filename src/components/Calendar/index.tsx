@@ -2,6 +2,7 @@ import React from 'react';
 import PlaceholderPreview from '../PlaceholderPreview';
 import { TouchableOpacity, View, Text } from 'react-native';
 import clsx from 'clsx';
+import { CalendarCompo } from './CalendarCompo';
 
 const Skeleton = () => {
   return (
@@ -12,12 +13,13 @@ const Skeleton = () => {
 };
 
 const ActualComp = () => {
-  return null;
+  return <CalendarCompo />;
 };
 
 export default function () {
   return (
     <PlaceholderPreview
+      showActualComp
       renderPlaceholder={(onClick, compReady) => (
         <TouchableOpacity onPress={() => onClick()}>
           <View
@@ -31,11 +33,7 @@ export default function () {
         </TouchableOpacity>
       )}
     >
-      {/* {onClick => (
-        <TouchableOpacity onPress={onClick}>
-          <ActualComp />
-        </TouchableOpacity>
-      )} */}
+      <ActualComp />
     </PlaceholderPreview>
   );
 }
