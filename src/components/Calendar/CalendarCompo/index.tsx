@@ -16,33 +16,31 @@ export const CalendarCompo = (): React.JSX.Element => {
   };
 
   return (
-    <SafeAreaView className="h-full bg-[#FDF5E6]">
-      <ScrollView className="h-full">
-        <View>
-          <CalendarComp initialDate={currentDate} onDateChange={onDateChanged} />
-        </View>
-        <View style={styles.pluginList}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ ...styles.infoBlock, ...styles.flex, marginRight: 10 }}>
-              <Text style={styles.blockTitle}>{lunarDate}</Text>
-              <Text style={styles.blockText}>{lunarGanZhiDate}</Text>
-              <Text style={styles.blockText}>{time}</Text>
-            </View>
-            <View style={{ ...styles.infoBlock, ...styles.flex }}>
-              <Text style={styles.blockTitle}>{dayText}</Text>
-              <Text style={styles.blockText}>{dateText}</Text>
-              <Text style={styles.blockText}>{progressText}</Text>
-            </View>
+    <>
+      <View>
+        <CalendarComp initialDate={currentDate} onDateChange={onDateChanged} />
+      </View>
+      <View style={styles.pluginList}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ ...styles.infoBlock, ...styles.flex, marginRight: 10 }}>
+            <Text style={styles.blockTitle}>{lunarDate}</Text>
+            <Text style={styles.blockText}>{lunarGanZhiDate}</Text>
+            <Text style={styles.blockText}>{time}</Text>
           </View>
-          <View style={styles.infoBlock}>
-            <Text style={{ ...styles.blockTitle, ...styles.red }}>世界人权日</Text>
+          <View style={{ ...styles.infoBlock, ...styles.flex }}>
+            <Text style={styles.blockTitle}>{dayText}</Text>
+            <Text style={styles.blockText}>{dateText}</Text>
+            <Text style={styles.blockText}>{progressText}</Text>
           </View>
-          <PluginPanel title="我的运势" desc="没有最好的运势, 只有更好的选择" />
-          <PluginPanel title="黄历择吉" desc="为美好的事情选个好日子" />
-          <PluginPanel title="心情-状态" desc="记录每日状态" />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <View style={styles.infoBlock}>
+          <Text style={{ ...styles.blockTitle, ...styles.red }}>世界人权日</Text>
+        </View>
+        <PluginPanel title="我的运势" desc="没有最好的运势, 只有更好的选择" />
+        <PluginPanel title="黄历择吉" desc="为美好的事情选个好日子" />
+        <PluginPanel title="心情-状态" desc="记录每日状态" />
+      </View>
+    </>
   );
 };
 

@@ -3,19 +3,23 @@ import DayFortuneAnalysis from '@/components/DayFortuneAnalysis';
 import DayParameters from '@/components/DayParameters';
 import React from 'react';
 
-import { View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 
 const CalendarScreen = () => {
   return (
-    <View className="flex h-full ">
-      <Calendar />
-      <View className="mt-2">
-        <DayFortuneAnalysis />
-      </View>
-      <View className="mt-2">
-        <DayParameters />
-      </View>
-    </View>
+    <SafeAreaView className="flex-1 bg-[#FDF5E6]">
+      <ScrollView className="flex-1">
+        <View className="mt-2">
+          <Calendar />
+        </View>
+        <View className="mt-2">
+          <DayFortuneAnalysis />
+        </View>
+        <View className="mt-2">
+          <DayParameters />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
