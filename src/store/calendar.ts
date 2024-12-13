@@ -16,7 +16,7 @@ export const useSubmitMood = () => {
     mutationFn: submitMood,
     onSuccess: () => {
       // 提交成功后刷新日历数据
-      queryClient.invalidateQueries(['calendar']);
+      queryClient.invalidateQueries({ queryKey: ['calendar'] });
     },
   });
 };
@@ -28,7 +28,7 @@ export const useSubmitAccuracy = () => {
     mutationFn: submitAccuracy,
     onSuccess: () => {
       // 提交成功后刷新日历数据
-      queryClient.invalidateQueries(['calendar']);
+      queryClient.invalidateQueries({ queryKey: ['calendar'] });
     },
   });
 };

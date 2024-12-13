@@ -1,41 +1,92 @@
 import React from 'react';
-import PlaceholderPreview from '../PlaceholderPreview';
-import { TouchableOpacity, View, Text } from 'react-native';
-import clsx from 'clsx';
+import { View, Text } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { selectedDateAtom } from '@/store/atoms/calendar';
+import { fetchDayParameters } from '@/services/dayFortune';
+import PlaceholderPreview from '@/components/PlaceholderPreview';
 
-const Skeleton = () => {
-  return (
-    <View className="w-full h-[20vh] flex items-center justify-center">
-      <Text className=" text-center">当日硬核参数（如吉数等）</Text>
+const Skeleton = () => (
+  <View className="mx-4 bg-white/80 rounded-lg p-4 space-y-4">
+    <View className="w-24 h-6 bg-[#8B4513]/20 rounded" />
+    <View className="flex-row flex-wrap gap-4">
+      {[1, 2, 3, 4].map(i => (
+        <View key={i} className="w-[45%] h-20 bg-[#8B4513]/10 rounded" />
+      ))}
+    </View>
+    <View className="space-y-3">
+      {[1, 2, 3, 4, 5].map(i => (
+        <View key={i} className="w-full h-6 bg-[#8B4513]/20 rounded" />
+      ))}
+    </View>
+  </View>
+);
+
+const LuckMeter = ({ value }: { value: number }) => (
+  <View className="w-full h-2 bg-[#8B4513]/20 rounded-full overflow-hidden">
+    <View className="h-full bg-[#8B4513]" style={{ width: `${value}%` }} />
+  </View>
+);
+
+const DayParameters = () => {
+  const [selectedDate] = useAtom(selectedDateAtom);
+  const { data, isLoading } = useQuery({
+    queryKey: ['dayParameters', selectedDate],
+    queryFn: () => fetchDayParameters(selectedDate),
+  });
+
+  const renderParameterBox = (title: string, items: string[] | number[]) => (
+    <View className="bg-[#8B4513]/10 rounded-lg p-3 flex-1 min-w-[45%]">
+      <Text className="text-[#8B4513] font-medium mb-2">{title}</Text>
+      <Text className="text-[#8B4513]/80">{Array.isArray(items) ? items.join('、') : items}</Text>
     </View>
   );
-};
 
-const ActualComp = () => {
-  return null;
-};
-
-export default function () {
   return (
-    <PlaceholderPreview
-      renderPlaceholder={(onClick, compReady) => (
-        <TouchableOpacity onPress={() => onClick()}>
-          <View
-            className={clsx({
-              ['bg-red-200']: !compReady,
-              ['bg-green-200']: compReady,
-            })}
-          >
-            <Skeleton />
+    <PlaceholderPreview showActualComp={!isLoading} renderPlaceholder={() => <Skeleton />}>
+      <View className="mx-4 bg-white/80 rounded-lg p-4">
+        <Text className="text-lg font-medium text-[#8B4513] mb-4">今日参数</Text>
+
+        {/* 参数盒子 */}
+        <View className="flex-row flex-wrap gap-4 mb-6">
+          {data && (
+            <>
+              {renderParameterBox('吉数', data.luckyNumbers)}
+              {renderParameterBox('吉色', data.luckyColors)}
+              {renderParameterBox('吉位', data.luckyDirections)}
+              {renderParameterBox('吉时', data.luckyTime)}
+            </>
+          )}
+        </View>
+
+        {/* 运势指数 */}
+        {data && (
+          <View className="space-y-4">
+            <View className="space-y-2">
+              <Text className="text-[#8B4513] font-medium">总运势指数</Text>
+              <LuckMeter value={data.generalLuck} />
+              <Text className="text-[#8B4513]/60 text-right">{data.generalLuck}%</Text>
+            </View>
+
+            <View className="space-y-3">
+              {[
+                { label: '事业运势', value: data.careerLuck },
+                { label: '财运指数', value: data.wealthLuck },
+                { label: '感情指数', value: data.loveLuck },
+                { label: '健康指数', value: data.healthLuck },
+              ].map((item, index) => (
+                <View key={index} className="space-y-1">
+                  <Text className="text-[#8B4513]/80">{item.label}</Text>
+                  <LuckMeter value={item.value} />
+                  <Text className="text-[#8B4513]/60 text-right">{item.value}%</Text>
+                </View>
+              ))}
+            </View>
           </View>
-        </TouchableOpacity>
-      )}
-    >
-      {/* {onClick => (
-        <TouchableOpacity onPress={onClick}>
-          <ActualComp />
-        </TouchableOpacity>
-      )} */}
+        )}
+      </View>
     </PlaceholderPreview>
   );
-}
+};
+
+export default DayParameters;

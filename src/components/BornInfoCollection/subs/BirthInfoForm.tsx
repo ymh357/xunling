@@ -2,40 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import type { BirthInfo } from '@/store/profile';
 import RegionPicker from './RegionPicker';
+import { BornInfo } from '@/types/user';
+
 interface BirthInfoFormProps {
   visible: boolean;
   onClose: () => void;
-  onSubmit: (birthInfo: BirthInfo) => Promise<void>;
-  initialValues: BirthInfo | null;
+  onSubmit: (birthInfo: BornInfo) => Promise<void>;
+  initialValues: BornInfo | null;
 }
 
 const BirthInfoForm = ({ visible, onClose, onSubmit, initialValues }: BirthInfoFormProps) => {
   const [birthDate, setBirthDate] = useState(initialValues?.birthDate || new Date());
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
+  const [gender, setGender] = useState(initialValues?.gender || 'male');
   const [showPicker, setShowPicker] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (visible && initialValues?.birthPlace) {
-      // 如果有初始值，解析成地区数组
       const regions = initialValues.birthPlace.split(' ');
       setSelectedRegions(regions);
+      setGender(initialValues.gender || 'male');
     }
   }, [visible, initialValues]);
 
   const handleSubmit = async () => {
     if (selectedRegions.length < 3) {
-      // 可以添加错误提示
       return;
     }
 
     setIsSubmitting(true);
     try {
+      const birthTime = birthDate.toLocaleTimeString('zh-CN', {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+
       await onSubmit({
         birthDate,
-        birthPlace: selectedRegions.join(' '), // 将地区数组转换为字符串
+        birthTime,
+        birthPlace: selectedRegions.join(' '),
+        gender,
         isComplete: true,
       });
     } finally {
@@ -47,7 +55,6 @@ const BirthInfoForm = ({ visible, onClose, onSubmit, initialValues }: BirthInfoF
     <Modal visible={visible} animationType="slide" transparent={true} onRequestClose={onClose}>
       <View className="flex-1 justify-end bg-black/30">
         <View className="bg-[#FDF5E6] rounded-t-3xl">
-          {/* 表单头部 */}
           <View className="flex-row justify-between items-center p-4 border-b border-[#8B4513]/20">
             <Text className="text-xl font-bold text-[#8B4513]">
               <Icon name="calendar-clock" size={24} color="#8B4513" /> 生辰信息
@@ -103,6 +110,39 @@ const BirthInfoForm = ({ visible, onClose, onSubmit, initialValues }: BirthInfoF
                   已选择：{selectedRegions.join(' ')}
                 </Text>
               )}
+            </View>
+
+            {/* 性别选择 - 新增 */}
+            <View>
+              <Text className="text-[#8B4513] mb-2 font-medium">选择性别</Text>
+              <View className="flex-row space-x-4">
+                <TouchableOpacity
+                  onPress={() => setGender('male')}
+                  className={`flex-1 p-3 rounded-lg ${
+                    gender === 'male'
+                      ? 'bg-[#8B4513]/10 border-2 border-[#8B4513]'
+                      : 'bg-white/50 border border-[#8B4513]/30'
+                  }`}
+                >
+                  <View className="flex-row items-center justify-center space-x-2">
+                    <Icon name="gender-male" size={20} color="#8B4513" />
+                    <Text className="text-[#8B4513] font-medium">男</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setGender('female')}
+                  className={`flex-1 p-3 rounded-lg ${
+                    gender === 'female'
+                      ? 'bg-[#8B4513]/10 border-2 border-[#8B4513]'
+                      : 'bg-white/50 border border-[#8B4513]/30'
+                  }`}
+                >
+                  <View className="flex-row items-center justify-center space-x-2">
+                    <Icon name="gender-female" size={20} color="#8B4513" />
+                    <Text className="text-[#8B4513] font-medium">女</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
 
             {/* 提交按钮 */}

@@ -2,6 +2,7 @@ import React from 'react';
 import PlaceholderPreview from '../PlaceholderPreview';
 import { TouchableOpacity, View, Text } from 'react-native';
 import clsx from 'clsx';
+import LanguageSwitch from './subs/LanguageSwitch';
 
 const Skeleton = () => {
   return (
@@ -17,12 +18,8 @@ const ActualComp = () => {
       <Text className="text-lg font-bold text-[#8B4513]">命理设置</Text>
       <View className="space-y-2">
         <View className="flex-row justify-between items-center p-4 bg-[#8B4513]/5 rounded-lg">
-          <Text className="text-[#8B4513]">通知提醒</Text>
-          {/* 开关组件 */}
-        </View>
-        <View className="flex-row justify-between items-center p-4 bg-[#8B4513]/5 rounded-lg">
-          <Text className="text-[#8B4513]">每日运势</Text>
-          {/* 开关组件 */}
+          <Text className="text-[#8B4513]">多语言</Text>
+          <LanguageSwitch />
         </View>
       </View>
     </View>

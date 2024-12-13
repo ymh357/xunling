@@ -1,37 +1,36 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useAtom } from 'jotai';
-import { BirthInfo, birthInfoAtom, characterAnalysisAtom } from '@/store/profile';
-import { useMutation } from '@tanstack/react-query';
 import PlaceholderPreview from '../PlaceholderPreview';
 import clsx from 'clsx';
-import { fetchCharacterAnalysis } from '@/services/profile';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import BirthInfoForm from './subs/BirthInfoForm';
+import { useBornInfo } from '@/store/user';
+import { BornInfo } from '@/types/user';
+import { userInfoAtom } from '@/store/atoms/user';
 
 const ActualComp = () => {
   const [showForm, setShowForm] = useState(false);
-  const [birthInfo, setBirthInfo] = useAtom(birthInfoAtom);
-  const [, setCharacterAnalysis] = useAtom(characterAnalysisAtom);
+  const [userInfo, setUserInfo] = useAtom(userInfoAtom);
+  console.log('userInfo :', userInfo);
+  const { data: bornInfo } = useBornInfo();
 
-  const analysisMutation = useMutation({
-    mutationFn: fetchCharacterAnalysis,
-    onSuccess: data => {
-      setCharacterAnalysis(data);
-    },
-  });
+  React.useEffect(() => {
+    if (bornInfo?.isComplete) {
+      setUserInfo(prev => (prev ? { ...prev, bornInfo: bornInfo } : null));
+    }
+  }, [bornInfo]);
 
-  const handleSubmit = async (newBirthInfo: BirthInfo) => {
-    setBirthInfo({ ...newBirthInfo, isComplete: true });
+  const handleSubmit = async (newBirthInfo: BornInfo) => {
+    setUserInfo(prev =>
+      prev ? { ...prev, bornInfo: { ...newBirthInfo, isComplete: true } } : null
+    );
     setShowForm(false);
-    // 获取性格分析数据
-    await analysisMutation.mutateAsync(newBirthInfo);
   };
 
   return (
     <View className="p-4 bg-white/80 rounded-lg">
-      {birthInfo?.isComplete ? (
-        // 已填写状态
+      {userInfo?.bornInfo?.isComplete ? (
         <TouchableOpacity
           onPress={() => setShowForm(true)}
           className="border-2 border-[#8B4513]/30 rounded-lg p-6"
@@ -39,13 +38,14 @@ const ActualComp = () => {
           <View className="space-y-2">
             <Text className="text-[#8B4513] text-lg font-medium">已录入生辰信息</Text>
             <Text className="text-[#8B4513]/70">
-              {birthInfo.birthDate.toLocaleDateString()} · {birthInfo.birthPlace}
+              {userInfo?.bornInfo.birthDate.toLocaleDateString()} {userInfo?.bornInfo.birthTime}
+              &nbsp;
+              {userInfo?.bornInfo.birthPlace}
             </Text>
             <Text className="text-[#8B4513]/50 text-sm">点击修改生辰信息</Text>
           </View>
         </TouchableOpacity>
       ) : (
-        // 未填写状态
         <TouchableOpacity
           onPress={() => setShowForm(true)}
           className="border-2 border-dashed border-[#8B4513]/30 rounded-lg p-6"
@@ -64,7 +64,7 @@ const ActualComp = () => {
         visible={showForm}
         onClose={() => setShowForm(false)}
         onSubmit={handleSubmit}
-        initialValues={birthInfo}
+        initialValues={userInfo?.bornInfo || null}
       />
     </View>
   );

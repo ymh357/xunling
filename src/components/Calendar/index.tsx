@@ -6,6 +6,8 @@ import { Calendar as RNCalendar, LocaleConfig, DateData } from 'react-native-cal
 import { useCalendarData, useSubmitMood, useSubmitAccuracy } from '@/store/calendar';
 import DayDetail from './CalendarCompo/DayDetail';
 import { DayData } from '@/types/calendar';
+import { useAtom } from 'jotai';
+import { selectedDateAtom } from '@/store/atoms/calendar';
 
 const Skeleton = () => (
   <View className="w-full h-[42vh] bg-white/80 rounded-lg p-4">
@@ -110,8 +112,8 @@ const getSubtitleInfo = (
 };
 
 const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState('');
-  const [showDayDetail, setShowDayDetail] = useState(false);
+  const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
+  const [detailDate, setDetailDate] = useState('');
 
   // 使用新的 hooks
   const { data: calendarData, isLoading } = useCalendarData();
@@ -140,10 +142,8 @@ const Calendar = () => {
 
     return (
       <TouchableOpacity
-        onPress={() => {
-          setSelectedDate(date.dateString);
-          setShowDayDetail(true);
-        }}
+        onPress={() => setSelectedDate(date.dateString)}
+        onLongPress={() => setDetailDate(date.dateString)}
       >
         <View
           className={clsx(
@@ -197,11 +197,11 @@ const Calendar = () => {
         markedDates={calendarData?.days || {}}
       />
 
-      {showDayDetail && (
+      {!!detailDate && (
         <DayDetail
           date={selectedDate}
           dayData={calendarData?.days[selectedDate]}
-          onClose={() => setShowDayDetail(false)}
+          onClose={() => setDetailDate('')}
           onSubmitMood={mood => submitMoodMutation({ date: selectedDate, mood })}
           onSubmitAccuracy={rating => submitAccuracyMutation({ date: selectedDate, rating })}
         />

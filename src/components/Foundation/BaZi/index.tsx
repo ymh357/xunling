@@ -46,15 +46,28 @@ const ActualComp = () => {
         <Text className="text-xl font-bold text-[#8B4513] ml-2">八字基础</Text>
       </View>
 
-      <View className="flex-row justify-between mb-4">
+      <View className="flex-row justify-between mb-6">
         {data.pillars.map((item, index) => (
-          <View key={index} className="items-center">
-            <View className="bg-[#8B4513]/10 rounded-lg p-3 w-[80px]">
-              <Text className="text-center text-[#8B4513] font-medium mb-1">{item.parts[0]}</Text>
-              <Text className="text-center text-[#8B4513] font-medium">{item.parts[1]}</Text>
+          <View key={index} className="items-center w-[80px]">
+            <View
+              className={clsx(
+                'rounded-lg p-2.5 w-full aspect-square items-center justify-center',
+                'bg-gradient-to-b from-[#8B4513]/5 to-[#8B4513]/15',
+                'border border-[#8B4513]/10'
+              )}
+            >
+              <Text className="text-center text-[#8B4513] font-medium text-lg">
+                {item.parts[0]}
+              </Text>
+              <View className="h-px w-8 bg-[#8B4513]/20 my-2" />
+              <Text className="text-center text-[#8B4513] font-medium text-lg">
+                {item.parts[1]}
+              </Text>
             </View>
-            <Text className="text-[#8B4513] mt-2">{item.name}</Text>
-            <Text className="text-[#8B4513]/70 text-xs mt-1">{item.desc}</Text>
+            <Text className="text-[#8B4513] font-medium mt-2.5">{item.name}</Text>
+            <Text className="text-[#8B4513]/60 text-xs mt-1 text-center" numberOfLines={2}>
+              {item.desc}
+            </Text>
           </View>
         ))}
       </View>

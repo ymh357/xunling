@@ -1,198 +1,107 @@
-import React, { useState } from 'react';
-import PlaceholderPreview from '../PlaceholderPreview';
-import { TouchableOpacity, View, Text, Image, Modal } from 'react-native';
-import clsx from 'clsx';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Image, Modal, TextInput } from 'react-native';
+import { useLogin, useUserInfo } from '@/store/user';
+import { useAtom } from 'jotai';
+import { userInfoAtom } from '@/store/atoms/user';
 
-interface UserInfo {
-  avatar: string;
-  userId: string;
-  username: string;
-  wuxing?: string;
-  zodiac?: string;
-  level?: number;
-}
+const UserInteraction = () => {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { mutate: login } = useLogin();
+  const { data: userInfo } = useUserInfo();
+  const [, setUserInfo] = useAtom(userInfoAtom);
 
-const Skeleton = () => {
+  useEffect(() => {
+    if (userInfo) {
+      setUserInfo(userInfo);
+    }
+  }, [userInfo]);
+
+  const handleLogin = async () => {
+    try {
+      await login({ username, password });
+      setShowLoginModal(false);
+      setUsername('');
+      setPassword('');
+    } catch (error) {
+      console.error('登录失败:', error);
+    }
+  };
+
   return (
-    <View className="w-full h-[10vh] flex items-center justify-center">
-      <Text className=" text-center">用户信息展示 + 登入/登出</Text>
-    </View>
-  );
-};
+    <View className="bg-white/80 rounded-lg p-4">
+      {userInfo ? (
+        <View className="flex-row items-center">
+          <Image
+            source={{ uri: userInfo.avatar }}
+            className="w-16 h-16 rounded-full"
+            defaultSource={{
+              uri: 'https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg',
+            }}
+          />
+          <View className="ml-4 flex-1">
+            <Text className="text-lg font-medium text-[#8B4513]">{userInfo.username}</Text>
+            <Text className="text-sm text-[#8B4513]/60">{userInfo.email || userInfo.phone}</Text>
+          </View>
+        </View>
+      ) : (
+        <TouchableOpacity onPress={() => setShowLoginModal(true)} className="flex-row items-center">
+          <View className="w-16 h-16 rounded-full bg-[#8B4513]/10 items-center justify-center">
+            <Text className="text-[#8B4513]">登录</Text>
+          </View>
+          <Text className="ml-4 text-[#8B4513]/80">点击登录以使用更多功能</Text>
+        </TouchableOpacity>
+      )}
 
-const UserProfileModal = ({
-  visible,
-  onClose,
-  userInfo,
-}: {
-  visible: boolean;
-  onClose: () => void;
-  userInfo: UserInfo;
-}) => {
-  return (
-    <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>
-      <View className="flex-1 justify-center items-center bg-black/30">
-        <View className="w-[80%] bg-[#FDF5E6] rounded-2xl overflow-hidden">
-          {/* 头部背景装饰 */}
-          <View className="h-20 bg-[#8B4513] opacity-80" />
+      <Modal
+        visible={showLoginModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowLoginModal(false)}
+      >
+        <View className="flex-1 bg-black/50 justify-center items-center">
+          <View className="bg-white rounded-lg p-6 w-[80%]">
+            <Text className="text-lg font-medium text-[#8B4513] mb-4">登录</Text>
 
-          {/* 用户信息 */}
-          <View className="px-6 pb-6 -mt-10">
-            <Image
-              source={{ uri: userInfo.avatar }}
-              className="w-20 h-20 rounded-full border-4 border-[#FDF5E6] mb-4"
+            <TextInput
+              value={username}
+              onChangeText={setUsername}
+              placeholder="用户名"
+              className="border border-[#8B4513]/20 rounded-lg px-4 py-2 mb-3"
+              placeholderTextColor="#8B4513"
             />
 
-            <View className="space-y-4">
-              <View>
-                <Text className="text-xl font-bold text-[#8B4513]">{userInfo.username}</Text>
-                <Text className="text-[#8B4513]/70">命主ID: {userInfo.userId}</Text>
-              </View>
+            <TextInput
+              value={password}
+              onChangeText={setPassword}
+              placeholder="密码"
+              secureTextEntry
+              className="border border-[#8B4513]/20 rounded-lg px-4 py-2 mb-4"
+              placeholderTextColor="#8B4513"
+            />
 
-              <View className="flex-row justify-between">
-                <View className="items-center p-3 bg-[#8B4513]/10 rounded-lg flex-1 mr-2">
-                  <Icon name="star-four-points" size={20} color="#8B4513" />
-                  <Text className="text-[#8B4513] mt-1">{userInfo.wuxing || '未知'}</Text>
-                  <Text className="text-[#8B4513]/70 text-xs">五行</Text>
-                </View>
-                <View className="items-center p-3 bg-[#8B4513]/10 rounded-lg flex-1 ml-2">
-                  <Icon name="compass" size={20} color="#8B4513" />
-                  <Text className="text-[#8B4513] mt-1">{userInfo.zodiac || '未知'}</Text>
-                  <Text className="text-[#8B4513]/70 text-xs">生肖</Text>
-                </View>
-              </View>
+            <View className="flex-row justify-end space-x-3">
+              <TouchableOpacity
+                onPress={() => {
+                  setShowLoginModal(false);
+                  setUsername('');
+                  setPassword('');
+                }}
+                className="px-4 py-2"
+              >
+                <Text className="text-[#8B4513]/60">取消</Text>
+              </TouchableOpacity>
 
-              <TouchableOpacity onPress={onClose} className="bg-[#8B4513] rounded-lg p-3 mt-4">
-                <Text className="text-center text-[#FDF5E6]">关闭</Text>
+              <TouchableOpacity onPress={handleLogin} className="bg-[#8B4513] px-4 py-2 rounded-lg">
+                <Text className="text-white">登录</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
-      </View>
-    </Modal>
-  );
-};
-
-const ActualComp = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    avatar:
-      'https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg',
-
-    userId: 'Guest-123',
-    username: '游客',
-    wuxing: '未知',
-    zodiac: '未知',
-    level: 0,
-  });
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    setUserInfo({
-      avatar:
-        'https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg',
-      userId: 'User-456',
-      username: '张三',
-      wuxing: '金',
-      zodiac: '龙',
-      level: 1,
-    });
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserInfo({
-      avatar:
-        'https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg',
-      userId: 'Guest-123',
-      username: '游客',
-      wuxing: '未知',
-      zodiac: '未知',
-      level: 0,
-    });
-  };
-  return (
-    <View className="w-full">
-      {/* 用户信息卡片 */}
-      <View className="bg-white/80 rounded-lg p-4">
-        <View className="flex-row items-center justify-between">
-          {/* 左侧用户信息 */}
-          <TouchableOpacity
-            className="flex-row items-center flex-1"
-            onPress={() => setShowProfile(true)}
-          >
-            <View className="relative">
-              <Image
-                source={{ uri: userInfo.avatar }}
-                className="w-16 h-16 rounded-full border-2 border-[#8B4513]"
-              />
-              {isLoggedIn && (
-                <View className="absolute bottom-0 right-0 bg-[#DAA520] rounded-lg px-2 py-0.5 items-center justify-center">
-                  <Text className="text-white text-xs">Lv.{userInfo.level}</Text>
-                </View>
-              )}
-            </View>
-
-            <View className="ml-4 flex-1">
-              <View className="flex-row items-center">
-                <Text className="text-lg font-bold text-[#8B4513]">{userInfo.username}</Text>
-                {isLoggedIn && (
-                  <View className="ml-1">
-                    <Icon name="check-decagram" size={16} color="#DAA520" />
-                  </View>
-                )}
-              </View>
-              <Text className="text-[#8B4513]/70 text-sm">
-                {isLoggedIn ? `${userInfo.wuxing}命 · ${userInfo.zodiac}年` : '尚未登录'}
-              </Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* 右侧登录按钮 */}
-          <TouchableOpacity
-            onPress={isLoggedIn ? handleLogout : handleLogin}
-            className={clsx(
-              'px-4 py-2 rounded-lg',
-              isLoggedIn ? 'bg-[#8B4513]/10' : 'bg-[#8B4513]'
-            )}
-          >
-            <Text className={clsx('font-medium', isLoggedIn ? 'text-[#8B4513]' : 'text-[#FDF5E6]')}>
-              {isLoggedIn ? '退出' : '登录'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* 用户详情弹窗 */}
-      <UserProfileModal
-        visible={showProfile}
-        onClose={() => setShowProfile(false)}
-        userInfo={userInfo}
-      />
+      </Modal>
     </View>
   );
 };
 
-export default function () {
-  return (
-    <PlaceholderPreview
-      showActualComp
-      renderPlaceholder={(onClick, compReady) => (
-        <TouchableOpacity onPress={() => onClick()}>
-          <View
-            className={clsx({
-              ['bg-red-200']: !compReady,
-              ['bg-green-200']: compReady,
-            })}
-          >
-            <Skeleton />
-          </View>
-        </TouchableOpacity>
-      )}
-    >
-      <ActualComp />
-    </PlaceholderPreview>
-  );
-}
+export default UserInteraction;
