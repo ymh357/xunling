@@ -1,7 +1,7 @@
 import React from 'react';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useTranslation } from 'react-i18next';
 
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -11,7 +11,10 @@ import ChatScreen from '@/screens/ChatScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
+
 export const RootNavigator = () => {
+  const { t } = useTranslation();
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -37,7 +40,7 @@ export const RootNavigator = () => {
           name="Foundation"
           component={FoundationScreen}
           options={{
-            title: '入门',
+            title: t('navigation.foundation'),
             tabBarIcon: ({ color }) => <Icon name="yin-yang" size={24} color={color} />,
           }}
         />
@@ -45,7 +48,7 @@ export const RootNavigator = () => {
           name="Calendar"
           component={CalendarScreen}
           options={{
-            title: '日历',
+            title: t('navigation.calendar'),
             tabBarIcon: ({ color }) => <Icon name="calendar-month" size={24} color={color} />,
           }}
         />
@@ -53,7 +56,7 @@ export const RootNavigator = () => {
           name="Home"
           component={HomeScreen}
           options={{
-            title: '主页',
+            title: t('navigation.home'),
             tabBarIcon: ({ color }) => <Icon name="home-variant" size={24} color={color} />,
           }}
         />
@@ -61,7 +64,7 @@ export const RootNavigator = () => {
           name="Chat"
           component={ChatScreen}
           options={{
-            title: '询灵',
+            title: t('navigation.chat'),
             tabBarIcon: ({ color }) => <Icon name="message-text" size={24} color={color} />,
           }}
         />
@@ -69,7 +72,7 @@ export const RootNavigator = () => {
           name="Profile"
           component={ProfileScreen}
           options={{
-            title: '命格',
+            title: t('navigation.profile'),
             tabBarIcon: ({ color }) => <Icon name="account" size={24} color={color} />,
           }}
         />

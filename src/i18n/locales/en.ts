@@ -7,6 +7,13 @@ export default {
     chinese: 'Chinese',
     english: 'English',
   },
+  navigation: {
+    foundation: 'Foundation',
+    calendar: 'Calendar',
+    home: 'Home',
+    chat: 'Chat',
+    profile: 'Profile',
+  },
   chat: {
     hints: {
       title: 'Suggested Questions',

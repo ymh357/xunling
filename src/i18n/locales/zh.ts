@@ -7,6 +7,13 @@ export default {
     chinese: '中文',
     english: '英语',
   },
+  navigation: {
+    foundation: '入门',
+    calendar: '日历',
+    home: '主页',
+    chat: '询灵',
+    profile: '命格',
+  },
   auth: {
     login: '登录',
     logout: '退出登录',

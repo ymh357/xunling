@@ -55,7 +55,7 @@ const ActualComp = () => {
         >
           <View className="items-center space-y-3">
             <Icon name="calendar-plus" size={32} color="#8B4513" />
-            <Text className="text-[#8B4513] text-lg font-medium">
+            <Text className="text-[#8B4513] text-lg font-medium" allowFontScaling={false}>
               {t('profile.bornInfo.prompt')}
             </Text>
             <Text className="text-[#8B4513]/70 text-sm text-center">
