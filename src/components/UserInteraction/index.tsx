@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, Modal, TextInput } from 'react-native';
-import { useLogin, useUserInfo } from '@/store/user';
+import { useLogin, useUserInfo, useLogout } from '@/store/user';
 import { useAtom } from 'jotai';
 import { userInfoAtom } from '@/store/atoms/user';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // 添加图标
 
 const UserInteraction = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { mutate: login } = useLogin();
+  const { mutate: logout } = useLogout();
   const { data: userInfo } = useUserInfo();
   const [, setUserInfo] = useAtom(userInfoAtom);
 
@@ -29,6 +31,15 @@ const UserInteraction = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUserInfo(null); // 清除用户信息
+    } catch (error) {
+      console.error('退出失败:', error);
+    }
+  };
+
   return (
     <View className="bg-white/80 rounded-lg p-4">
       {userInfo ? (
@@ -44,6 +55,9 @@ const UserInteraction = () => {
             <Text className="text-lg font-medium text-[#8B4513]">{userInfo.username}</Text>
             <Text className="text-sm text-[#8B4513]/60">{userInfo.email || userInfo.phone}</Text>
           </View>
+          <TouchableOpacity onPress={handleLogout} className="p-2 rounded-lg bg-[#8B4513]/10">
+            <Icon name="logout" size={20} color="#8B4513" />
+          </TouchableOpacity>
         </View>
       ) : (
         <TouchableOpacity onPress={() => setShowLoginModal(true)} className="flex-row items-center">

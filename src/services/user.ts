@@ -35,6 +35,17 @@ export const login = async (credentials: { username: string; password: string })
   }).then(res => res.json());
 };
 
+export const logout = async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  if (process.env.NODE_ENV === 'development') {
+    return { success: true };
+  }
+  // 实际的退出登录请求
+  return fetch('/api/logout', {
+    method: 'POST',
+  }).then(res => res.json());
+};
+
 export const fetchUserInfo = async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   if (process.env.NODE_ENV === 'development') {
