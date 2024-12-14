@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Platform } from 'react-native';
 import PlaceholderPreview from '@/components/PlaceholderPreview';
 import clsx from 'clsx';
 import React, { useState } from 'react';
@@ -8,9 +8,10 @@ import DayDetail from './CalendarCompo/DayDetail';
 import { DayData } from '@/types/calendar';
 import { useAtom } from 'jotai';
 import { selectedDateAtom } from '@/store/atoms/calendar';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Skeleton = () => (
-  <View className="w-full h-[42vh] bg-white/80 rounded-lg p-4">
+  <View className="w-full  bg-white/80 rounded-lg p-4">
     {/* 月份导航 */}
     <View className="flex-row justify-between items-center mb-4">
       <View className="w-24 h-6 rounded bg-[#8B4513]/20" />
@@ -130,12 +131,10 @@ const Calendar = () => {
     textDisabledColor: '#8B4513/40',
     dotColor: '#8B4513',
     monthTextColor: '#8B4513',
-    textMonthFontFamily: 'serif',
-    textDayFontFamily: 'serif',
-    textDayHeaderFontFamily: 'serif',
   };
 
   const renderCustomDay = (date: DateData) => {
+    const isSelected = date.dateString === selectedDate;
     const dayData = calendarData?.days[date.dateString];
     const isToday = date.dateString === new Date().toISOString().split('T')[0];
     const subtitleInfo = getSubtitleInfo(dayData);
@@ -148,12 +147,19 @@ const Calendar = () => {
         <View
           className={clsx(
             'items-center justify-center p-2 rounded-lg',
+            {
+              'bg-[#8B4513]': isSelected,
+            },
             getAccuracyClass(dayData?.accuracy),
             isToday && 'border-2 border-[#8B4513]'
           )}
         >
           <Text
-            className={clsx('text-base', isToday ? 'text-[#8B4513] font-bold' : 'text-[#8B4513]')}
+            className={clsx(
+              'text-base',
+              isSelected ? 'text-[#FDF5E6]' : 'text-[#8B4513]',
+              isToday && !isSelected && 'font-bold'
+            )}
           >
             {date.day}
           </Text>
@@ -166,6 +172,7 @@ const Calendar = () => {
                   'text-[#8B4513] font-medium': subtitleInfo.type === 'solarTerm',
                   'text-[#8B4513]/60': subtitleInfo.type === 'lunar',
                 },
+                isSelected && 'text-[#FDF5E6]',
                 isToday && 'font-medium'
               )}
               numberOfLines={1}
@@ -188,13 +195,19 @@ const Calendar = () => {
   }
 
   return (
-    <View className="flex-1 bg-[#FDF5E6]">
+    <View className="flex-1 bg-[#FDF5E6] shrink-0">
       <RNCalendar
         theme={theme}
         dayComponent={({ date }: { date: DateData }) => renderCustomDay(date)}
-        enableSwipeMonths
-        className="rounded-lg bg-white/80 p-4"
+        className="rounded-lg bg-white/80 p-4  shrink-0"
         markedDates={calendarData?.days || {}}
+        renderArrow={(direction: string) => (
+          <Icon
+            name={direction === 'left' ? 'chevron-left' : 'chevron-right'}
+            size={24}
+            color="#8B4513"
+          />
+        )}
       />
 
       {!!detailDate && (
@@ -227,7 +240,7 @@ const CalendarWrapper = () => {
         </TouchableOpacity>
       )}
     >
-      <View className="flex-1 bg-[#FDF5E6] p-4">
+      <View className="flex-1 bg-[#FDF5E6] p-4 shrink-0">
         <Calendar />
       </View>
     </PlaceholderPreview>

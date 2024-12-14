@@ -9,7 +9,7 @@ const CalendarScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#FDF5E6]">
       <ScrollView className="flex-1">
-        <View className="mt-2">
+        <View className="mt-2 shrink-0">
           <Calendar />
         </View>
         <View className="mt-2">
