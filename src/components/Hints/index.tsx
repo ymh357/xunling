@@ -5,16 +5,20 @@ import clsx from 'clsx';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { handleMessageSend, isLoadingAtom, messagesAtom, hintsAtom, useAIChat } from '@/store/chat';
 import { useAtom } from 'jotai';
+import { useTranslation } from 'react-i18next';
 
 const Skeleton = () => {
+  const { t } = useTranslation();
+
   return (
     <View className="w-full h-[20vh] flex items-center justify-center">
-      <Text className=" text-center">提示词序列</Text>
+      <Text className="text-center">{t('chat.hints.title')}</Text>
     </View>
   );
 };
 
 const ActualComp = () => {
+  const { t } = useTranslation();
   const [hints] = useAtom(hintsAtom);
   const [messages, setMessages] = useAtom(messagesAtom);
   const [, setIsLoading] = useAtom(isLoadingAtom);
@@ -28,7 +32,7 @@ const ActualComp = () => {
     <View className="bg-white/80 rounded-lg p-3">
       <View className="flex-row items-center mb-2">
         <Icon name="lightbulb-outline" size={18} color="#8B4513" />
-        <Text className="text-[#8B4513] font-medium ml-2">建议问题</Text>
+        <Text className="text-[#8B4513] font-medium ml-2">{t('chat.hints.title')}</Text>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {hints.map(hint => (

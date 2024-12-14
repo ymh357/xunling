@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDailyFortune } from '@/store/home';
+import { useTranslation } from 'react-i18next';
 
 const Skeleton = () => (
   <View className="bg-white/80 rounded-lg p-4">
@@ -27,6 +28,7 @@ const Skeleton = () => (
 );
 
 const FortuneOutlook = () => {
+  const { t } = useTranslation();
   const { data, isLoading } = useDailyFortune();
 
   if (isLoading || !data) {
@@ -37,15 +39,19 @@ const FortuneOutlook = () => {
     <View className="bg-white/80 rounded-lg p-4">
       <View className="flex-row items-center mb-3">
         <Icon name="star-four-points" size={20} color="#8B4513" />
-        <Text className="text-[#8B4513] font-medium ml-2">今日运势</Text>
+        <Text className="text-[#8B4513] font-medium ml-2">{t('fortune.todayFortune')}</Text>
       </View>
 
       <View className="flex-row flex-wrap">
         {[
-          { label: '财运', value: `${data.wealth}%`, icon: 'cash' },
-          { label: '事业', value: `${data.career}%`, icon: 'briefcase' },
-          { label: '健康', value: `${data.health}%`, icon: 'heart' },
-          { label: '感情', value: `${data.relationship}%`, icon: 'heart-multiple' },
+          { label: t('fortune.wealth'), value: `${data.wealth}%`, icon: 'cash' },
+          { label: t('fortune.career'), value: `${data.career}%`, icon: 'briefcase' },
+          { label: t('fortune.health'), value: `${data.health}%`, icon: 'heart' },
+          {
+            label: t('fortune.relationship'),
+            value: `${data.relationship}%`,
+            icon: 'heart-multiple',
+          },
         ].map((item, index) => (
           <View key={index} className="w-1/2 p-2">
             <View className="bg-[#8B4513]/10 rounded-lg p-3">

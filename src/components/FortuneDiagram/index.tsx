@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDirectionGuidance } from '@/store/home';
+import { useTranslation } from 'react-i18next';
 
 const Skeleton = () => (
   <View className="bg-white/80 rounded-lg p-4">
@@ -21,6 +22,7 @@ const Skeleton = () => (
 );
 
 const FortuneDiagram = () => {
+  const { t } = useTranslation();
   const { data, isLoading } = useDirectionGuidance();
 
   if (isLoading || !data) {
@@ -31,12 +33,12 @@ const FortuneDiagram = () => {
     <View className="bg-white/80 rounded-lg p-4">
       <View className="flex-row items-center mb-3">
         <Icon name="compass" size={20} color="#8B4513" />
-        <Text className="text-[#8B4513] font-medium ml-2">吉位趋向</Text>
+        <Text className="text-[#8B4513] font-medium ml-2">{t('fortune.directionGuidance')}</Text>
       </View>
 
       <View className="bg-[#8B4513]/10 rounded-lg p-3">
         <Text className="text-[#8B4513]/80 mb-2">
-          今日宜往：<Text className="font-medium">{data.direction}</Text>
+          {t('fortune.todayDirection')}: <Text className="font-medium">{data.direction}</Text>
         </Text>
         <Text className="text-[#8B4513]/70 text-sm leading-6">{data.description}</Text>
       </View>

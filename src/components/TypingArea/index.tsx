@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import PlaceholderPreview from '../PlaceholderPreview';
 import { TouchableOpacity, View, Text, TextInput } from 'react-native';
 import clsx from 'clsx';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { handleMessageSend, isLoadingAtom, messagesAtom, useAIChat } from '@/store/chat';
 import { useAtom } from 'jotai';
+import { useTranslation } from 'react-i18next';
 
 const Skeleton = () => {
+  const { t } = useTranslation();
   return (
     <View className="w-full h-[20vh] flex items-center justify-center">
-      <Text className=" text-center">打字区域</Text>
+      <Text className="text-center">{t('chat.input.title')}</Text>
     </View>
   );
 };
 
 const ActualComp = () => {
+  const { t } = useTranslation();
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useAtom(messagesAtom);
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
@@ -32,7 +34,7 @@ const ActualComp = () => {
     <View className="flex-row items-center bg-white/80 rounded-full px-4 py-2">
       <TextInput
         className="flex-1 text-[#8B4513] min-h-[40px]"
-        placeholder="请输入您的问题..."
+        placeholder={t('chat.input.placeholder')}
         placeholderTextColor="#8B4513/50"
         value={message}
         onChangeText={setMessage}

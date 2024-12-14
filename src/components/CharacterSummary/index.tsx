@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useAtom } from 'jotai';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 import PlaceholderPreview from '../PlaceholderPreview';
 import { useCharacterInfo } from '@/store/user';
 import { userInfoAtom } from '@/store/atoms/user';
@@ -56,6 +57,7 @@ const Skeleton = () => (
 );
 
 const ActualComp = () => {
+  const { t } = useTranslation();
   const [userInfo] = useAtom(userInfoAtom);
   const { data: characterInfo } = useCharacterInfo();
 
@@ -64,9 +66,11 @@ const ActualComp = () => {
       <View className="p-6 bg-white/80 rounded-lg">
         <View className="items-center space-y-3">
           <Icon name="lock-outline" size={32} color="#8B4513" />
-          <Text className="text-[#8B4513] text-lg font-medium text-center">请先填写生辰信息</Text>
+          <Text className="text-[#8B4513] text-lg font-medium text-center">
+            {t('profile.bornInfo.complete')}
+          </Text>
           <Text className="text-[#8B4513]/70 text-sm text-center">
-            完善生辰信息，即可查看您的命理性格分析
+            {t('profile.bornInfo.completeHint')}
           </Text>
         </View>
       </View>
@@ -78,7 +82,7 @@ const ActualComp = () => {
       <View className="p-6 bg-white/80 rounded-lg">
         <View className="items-center space-y-3">
           <ActivityIndicator color="#8B4513" />
-          <Text className="text-[#8B4513] text-sm">正在分析命理...</Text>
+          <Text className="text-[#8B4513] text-sm">{t('common.loading')}</Text>
         </View>
       </View>
     );
@@ -90,7 +94,9 @@ const ActualComp = () => {
       <View className="mb-6">
         <View className="flex-row items-center mb-4">
           <Icon name="star-circle" size={28} color="#8B4513" />
-          <Text className="text-[#8B4513] text-xl font-bold ml-2">性格特征</Text>
+          <Text className="text-[#8B4513] text-xl font-bold ml-2">
+            {t('character.personality')}
+          </Text>
         </View>
         <View className="flex-row flex-wrap gap-2">
           {characterInfo.personality.map((trait, index) => (
@@ -105,7 +111,7 @@ const ActualComp = () => {
       <View className="mb-6">
         <View className="flex-row items-center mb-4">
           <Icon name="star-four-points" size={28} color="#8B4513" />
-          <Text className="text-[#8B4513] text-xl font-bold ml-2">兴趣爱好</Text>
+          <Text className="text-[#8B4513] text-xl font-bold ml-2">{t('character.interests')}</Text>
         </View>
         <View className="flex-row flex-wrap gap-2">
           {characterInfo.interests.map((interest, index) => (
@@ -120,7 +126,7 @@ const ActualComp = () => {
       <View className="mb-6">
         <View className="flex-row items-center mb-4">
           <Icon name="briefcase" size={28} color="#8B4513" />
-          <Text className="text-[#8B4513] text-xl font-bold ml-2">适合职业</Text>
+          <Text className="text-[#8B4513] text-xl font-bold ml-2">{t('character.career')}</Text>
         </View>
         <View className="bg-[#8B4513]/5 rounded-2xl p-4">
           <Text className="text-[#8B4513]">{characterInfo.career}</Text>
@@ -132,7 +138,9 @@ const ActualComp = () => {
         <View className="bg-[#DAA520]/10 rounded-2xl p-6">
           <View className="flex-row items-center mb-4">
             <Icon name="compass" size={28} color="#8B4513" />
-            <Text className="text-[#8B4513] text-xl font-bold ml-2">人生目标</Text>
+            <Text className="text-[#8B4513] text-xl font-bold ml-2">
+              {t('character.lifeGoals')}
+            </Text>
           </View>
           <View className="flex-row flex-wrap gap-2">
             {characterInfo.lifeGoals.map((goal, index) => (

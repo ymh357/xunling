@@ -8,11 +8,12 @@ import BirthInfoForm from './subs/BirthInfoForm';
 import { useBornInfo } from '@/store/user';
 import { BornInfo } from '@/types/user';
 import { userInfoAtom } from '@/store/atoms/user';
+import { useTranslation } from 'react-i18next';
 
 const ActualComp = () => {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [userInfo, setUserInfo] = useAtom(userInfoAtom);
-  console.log('userInfo :', userInfo);
   const { data: bornInfo } = useBornInfo();
 
   React.useEffect(() => {
@@ -36,13 +37,15 @@ const ActualComp = () => {
           className="border-2 border-[#8B4513]/30 rounded-lg p-6"
         >
           <View className="space-y-2">
-            <Text className="text-[#8B4513] text-lg font-medium">已录入生辰信息</Text>
+            <Text className="text-[#8B4513] text-lg font-medium">
+              {t('profile.bornInfo.complete')}
+            </Text>
             <Text className="text-[#8B4513]/70">
               {userInfo?.bornInfo.birthDate.toLocaleDateString()} {userInfo?.bornInfo.birthTime}
               &nbsp;
               {userInfo?.bornInfo.birthPlace}
             </Text>
-            <Text className="text-[#8B4513]/50 text-sm">点击修改生辰信息</Text>
+            <Text className="text-[#8B4513]/50 text-sm">{t('profile.bornInfo.completeHint')}</Text>
           </View>
         </TouchableOpacity>
       ) : (
@@ -52,9 +55,11 @@ const ActualComp = () => {
         >
           <View className="items-center space-y-3">
             <Icon name="calendar-plus" size={32} color="#8B4513" />
-            <Text className="text-[#8B4513] text-lg font-medium">点击填写生辰信息</Text>
+            <Text className="text-[#8B4513] text-lg font-medium">
+              {t('profile.bornInfo.prompt')}
+            </Text>
             <Text className="text-[#8B4513]/70 text-sm text-center">
-              填写准确的生辰八字，获取更精准的命理分析
+              {t('profile.bornInfo.hint')}
             </Text>
           </View>
         </TouchableOpacity>

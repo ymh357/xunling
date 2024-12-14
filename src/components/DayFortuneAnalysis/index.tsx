@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { selectedDateAtom } from '@/store/atoms/calendar';
 import { fetchDayFortune } from '@/services/dayFortune';
 import PlaceholderPreview from '@/components/PlaceholderPreview';
+import { useTranslation } from 'react-i18next';
 
 const Skeleton = () => (
   <View className="mx-4 bg-white/80 rounded-lg p-4 space-y-4">
@@ -19,6 +20,7 @@ const Skeleton = () => (
 );
 
 const DayFortuneAnalysis = () => {
+  const { t } = useTranslation();
   const [selectedDate] = useAtom(selectedDateAtom);
   const { data, isLoading } = useQuery({
     queryKey: ['dayFortune', selectedDate],
@@ -26,17 +28,19 @@ const DayFortuneAnalysis = () => {
   });
 
   const sections = [
-    { title: '运势概述', content: data?.overview },
-    { title: '事业运势', content: data?.career },
-    { title: '财运', content: data?.wealth },
-    { title: '感情运势', content: data?.love },
-    { title: '健康运势', content: data?.health },
+    { title: t('fortune.overview'), content: data?.overview },
+    { title: t('fortune.career'), content: data?.career },
+    { title: t('fortune.wealth'), content: data?.wealth },
+    { title: t('fortune.love'), content: data?.love },
+    { title: t('fortune.health'), content: data?.health },
   ];
 
   return (
     <PlaceholderPreview showActualComp={!isLoading} renderPlaceholder={() => <Skeleton />}>
       <View className="mx-4 bg-white/80 rounded-lg p-4">
-        <Text className="text-lg font-medium text-[#8B4513] mb-4">今日运势详解</Text>
+        <Text className="text-lg font-medium text-[#8B4513] mb-4">
+          {t('fortune.detailedFortune')}
+        </Text>
         <View className="space-y-4">
           {sections.map((section, index) => (
             <View key={index}>

@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { selectedDateAtom } from '@/store/atoms/calendar';
 import { fetchDayParameters } from '@/services/dayFortune';
 import PlaceholderPreview from '@/components/PlaceholderPreview';
+import { useTranslation } from 'react-i18next';
 
 const Skeleton = () => (
   <View className="mx-4 bg-white/80 rounded-lg p-4 space-y-4">
@@ -29,6 +30,7 @@ const LuckMeter = ({ value }: { value: number }) => (
 );
 
 const DayParameters = () => {
+  const { t } = useTranslation();
   const [selectedDate] = useAtom(selectedDateAtom);
   const { data, isLoading } = useQuery({
     queryKey: ['dayParameters', selectedDate],
@@ -45,16 +47,18 @@ const DayParameters = () => {
   return (
     <PlaceholderPreview showActualComp={!isLoading} renderPlaceholder={() => <Skeleton />}>
       <View className="mx-4 bg-white/80 rounded-lg p-4">
-        <Text className="text-lg font-medium text-[#8B4513] mb-4">今日参数</Text>
+        <Text className="text-lg font-medium text-[#8B4513] mb-4">
+          {t('fortune.todayParameters')}
+        </Text>
 
         {/* 参数盒子 */}
         <View className="flex-row flex-wrap gap-4 mb-6">
           {data && (
             <>
-              {renderParameterBox('吉数', data.luckyNumbers)}
-              {renderParameterBox('吉色', data.luckyColors)}
-              {renderParameterBox('吉位', data.luckyDirections)}
-              {renderParameterBox('吉时', data.luckyTime)}
+              {renderParameterBox(t('fortune.luckyNumbers'), data.luckyNumbers)}
+              {renderParameterBox(t('fortune.luckyColors'), data.luckyColors)}
+              {renderParameterBox(t('fortune.luckyDirections'), data.luckyDirections)}
+              {renderParameterBox(t('fortune.luckyTime'), data.luckyTime)}
             </>
           )}
         </View>
@@ -63,17 +67,17 @@ const DayParameters = () => {
         {data && (
           <View className="space-y-4">
             <View className="space-y-2">
-              <Text className="text-[#8B4513] font-medium">总运势指数</Text>
+              <Text className="text-[#8B4513] font-medium">{t('fortune.generalLuck')}</Text>
               <LuckMeter value={data.generalLuck} />
               <Text className="text-[#8B4513]/60 text-right">{data.generalLuck}%</Text>
             </View>
 
             <View className="space-y-3">
               {[
-                { label: '事业运势', value: data.careerLuck },
-                { label: '财运指数', value: data.wealthLuck },
-                { label: '感情指数', value: data.loveLuck },
-                { label: '健康指数', value: data.healthLuck },
+                { label: t('fortune.careerLuck'), value: data.careerLuck },
+                { label: t('fortune.wealthLuck'), value: data.wealthLuck },
+                { label: t('fortune.loveLuck'), value: data.loveLuck },
+                { label: t('fortune.healthLuck'), value: data.healthLuck },
               ].map((item, index) => (
                 <View key={index} className="space-y-1">
                   <Text className="text-[#8B4513]/80">{item.label}</Text>

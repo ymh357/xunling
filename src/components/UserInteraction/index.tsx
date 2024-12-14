@@ -3,9 +3,11 @@ import { View, Text, TouchableOpacity, Image, Modal, TextInput } from 'react-nat
 import { useLogin, useUserInfo, useLogout } from '@/store/user';
 import { useAtom } from 'jotai';
 import { userInfoAtom } from '@/store/atoms/user';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // 添加图标
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTranslation } from 'react-i18next';
 
 const UserInteraction = () => {
+  const { t } = useTranslation();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -27,16 +29,16 @@ const UserInteraction = () => {
       setUsername('');
       setPassword('');
     } catch (error) {
-      console.error('登录失败:', error);
+      console.error(t('auth.loginFailed'), error);
     }
   };
 
   const handleLogout = async () => {
     try {
       await logout();
-      setUserInfo(null); // 清除用户信息
+      setUserInfo(null);
     } catch (error) {
-      console.error('退出失败:', error);
+      console.error(t('auth.logoutFailed'), error);
     }
   };
 
@@ -62,9 +64,9 @@ const UserInteraction = () => {
       ) : (
         <TouchableOpacity onPress={() => setShowLoginModal(true)} className="flex-row items-center">
           <View className="w-16 h-16 rounded-full bg-[#8B4513]/10 items-center justify-center">
-            <Text className="text-[#8B4513]">登录</Text>
+            <Text className="text-[#8B4513]">{t('auth.login')}</Text>
           </View>
-          <Text className="ml-4 text-[#8B4513]/80">点击登录以使用更多功能</Text>
+          <Text className="ml-4 text-[#8B4513]/80">{t('auth.loginHint')}</Text>
         </TouchableOpacity>
       )}
 
@@ -76,12 +78,12 @@ const UserInteraction = () => {
       >
         <View className="flex-1 bg-black/50 justify-center items-center">
           <View className="bg-white rounded-lg p-6 w-[80%]">
-            <Text className="text-lg font-medium text-[#8B4513] mb-4">登录</Text>
+            <Text className="text-lg font-medium text-[#8B4513] mb-4">{t('auth.login')}</Text>
 
             <TextInput
               value={username}
               onChangeText={setUsername}
-              placeholder="用户名"
+              placeholder={t('auth.username')}
               className="border border-[#8B4513]/20 rounded-lg px-4 py-2 mb-3"
               placeholderTextColor="#8B4513"
             />
@@ -89,7 +91,7 @@ const UserInteraction = () => {
             <TextInput
               value={password}
               onChangeText={setPassword}
-              placeholder="密码"
+              placeholder={t('auth.password')}
               secureTextEntry
               className="border border-[#8B4513]/20 rounded-lg px-4 py-2 mb-4"
               placeholderTextColor="#8B4513"
@@ -104,11 +106,11 @@ const UserInteraction = () => {
                 }}
                 className="px-4 py-2"
               >
-                <Text className="text-[#8B4513]/60">取消</Text>
+                <Text className="text-[#8B4513]/60">{t('common.cancel')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={handleLogin} className="bg-[#8B4513] px-4 py-2 rounded-lg">
-                <Text className="text-white">登录</Text>
+                <Text className="text-white">{t('auth.login')}</Text>
               </TouchableOpacity>
             </View>
           </View>

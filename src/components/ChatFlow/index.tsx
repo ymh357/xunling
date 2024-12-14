@@ -13,6 +13,8 @@ import clsx from 'clsx';
 import { isLoadingAtom, messagesAtom } from '@/store/chat';
 import { useAtom } from 'jotai';
 import { useTailwind } from 'nativewind';
+import { useTranslation } from 'react-i18next';
+
 interface Message {
   id: string;
   type: 'user' | 'assistant';
@@ -22,14 +24,16 @@ interface Message {
 }
 
 const Skeleton = () => {
+  const { t } = useTranslation();
   return (
     <View className="w-full h-[40vh] flex items-center justify-center">
-      <Text className=" text-center">对话流</Text>
+      <Text className="text-center">{t('chat.title')}</Text>
     </View>
   );
 };
 
 const ActualComp = () => {
+  const { t } = useTranslation();
   const scrollViewStyle = StyleSheet.flatten(
     useTailwind({
       className: 'mb-8',
@@ -98,7 +102,7 @@ const ActualComp = () => {
         <View className="flex-row items-center p-3">
           <View className="w-8 h-8 rounded-full bg-[#8B4513]/30 mr-2" />
           <View className="bg-white/80 rounded-2xl p-3 rounded-tl-none">
-            <Text className="text-[#8B4513]">正在思考...</Text>
+            <Text className="text-[#8B4513]">{t('chat.loading')}</Text>
           </View>
         </View>
       )}
