@@ -65,14 +65,16 @@ const DayParameters = () => {
 
         {/* 运势指数 */}
         {data && (
-          <View className="space-y-4">
+          <View className="space-y-6">
             <View className="space-y-2">
-              <Text className="text-[#8B4513] font-medium">{t('fortune.generalLuck')}</Text>
+              <View className="mb-2">
+                <Text className="text-[#8B4513] font-medium">{t('fortune.generalLuck')}</Text>
+              </View>
               <LuckMeter value={data.generalLuck} />
               <Text className="text-[#8B4513]/60 text-right">{data.generalLuck}%</Text>
             </View>
 
-            <View className="space-y-3">
+            <View className="space-y-4">
               {[
                 { label: t('fortune.careerLuck'), value: data.careerLuck },
                 { label: t('fortune.wealthLuck'), value: data.wealthLuck },
@@ -80,7 +82,9 @@ const DayParameters = () => {
                 { label: t('fortune.healthLuck'), value: data.healthLuck },
               ].map((item, index) => (
                 <View key={index} className="space-y-1">
-                  <Text className="text-[#8B4513]/80">{item.label}</Text>
+                  <View className="mb-2">
+                    <Text className="text-[#8B4513]/80">{item.label}</Text>
+                  </View>
                   <LuckMeter value={item.value} />
                   <Text className="text-[#8B4513]/60 text-right">{item.value}%</Text>
                 </View>
