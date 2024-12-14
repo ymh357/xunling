@@ -15,12 +15,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ymh357.modernreactnativeapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.ymh357.modernreactnativeapp"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1e966958-5efa-4001-95c5-f762b598943e"
       }
     }
   }
