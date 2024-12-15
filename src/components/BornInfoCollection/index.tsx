@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useAtom } from 'jotai';
 import PlaceholderPreview from '../PlaceholderPreview';
 import clsx from 'clsx';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import BirthInfoForm from './subs/BirthInfoForm';
 import { useBornInfo } from '@/store/user';
 import { BornInfo } from '@/types/user';

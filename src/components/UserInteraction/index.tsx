@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, Modal, TextInput } from 'react-nat
 import { useLogin, useUserInfo, useLogout } from '@/store/user';
 import { useAtom } from 'jotai';
 import { userInfoAtom } from '@/store/atoms/user';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 const UserInteraction = () => {

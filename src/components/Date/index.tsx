@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceholderPreview from '../PlaceholderPreview';
 import { TouchableOpacity, View, Text } from 'react-native';
 import clsx from 'clsx';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
 const Skeleton = () => (
   <View className="bg-white/80 rounded-lg p-4">

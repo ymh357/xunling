@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useAtom } from 'jotai';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import PlaceholderPreview from '../PlaceholderPreview';

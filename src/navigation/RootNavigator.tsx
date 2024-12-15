@@ -8,7 +8,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import FoundationScreen from '@/screens/FoundationScreen';
 import CalendarScreen from '@/screens/CalendarScreen';
 import ChatScreen from '@/screens/ChatScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 

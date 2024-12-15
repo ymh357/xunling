@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PlaceholderPreview from '../PlaceholderPreview';
 import { TouchableOpacity, View, Text, TextInput } from 'react-native';
 import clsx from 'clsx';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { handleMessageSend, isLoadingAtom, messagesAtom, useAIChat } from '@/store/chat';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';

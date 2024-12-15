@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { DayData, MoodData } from '@/types/calendar';
 import MoodSelector from './MoodSelector';
 import AccuracyRater from './AccuracyRater';

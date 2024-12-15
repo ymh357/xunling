@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useAtom } from 'jotai';
 import { languageAtom } from '@/store/preference';
 import { useTranslation } from 'react-i18next';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
 const LanguageSwitch = () => {
   const [language, setLanguage] = useAtom(languageAtom);

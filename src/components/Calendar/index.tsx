@@ -8,7 +8,7 @@ import DayDetail from './CalendarCompo/DayDetail';
 import { DayData } from '@/types/calendar';
 import { useAtom } from 'jotai';
 import { selectedDateAtom } from '@/store/atoms/calendar';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
 const Skeleton = () => (
   <View className="w-full  bg-white/80 rounded-lg p-4">
