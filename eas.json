@@ -13,6 +13,12 @@
     },
     "production": {
       "autoIncrement": true
+    },
+    "local": {
+      "distribution": "internal",
+      "env": {
+        "BUILD_ENV": "local"
+      }
     }
   },
   "submit": {
