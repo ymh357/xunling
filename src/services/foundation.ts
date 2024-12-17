@@ -100,7 +100,7 @@ const mockData = {
 
 // API 函数
 export const fetchWuXing = async (): Promise<WuXingData> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockData.wuxing;
   }
@@ -109,7 +109,7 @@ export const fetchWuXing = async (): Promise<WuXingData> => {
 };
 
 export const fetchZodiac = async (): Promise<ZodiacData> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockData.zodiac;
   }
@@ -118,7 +118,7 @@ export const fetchZodiac = async (): Promise<ZodiacData> => {
 };
 
 export const fetchBazi = async (): Promise<BaziData> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockData.bazi;
   }
@@ -127,7 +127,7 @@ export const fetchBazi = async (): Promise<BaziData> => {
 };
 
 export const fetchTerms = async (): Promise<TermData[]> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockData.terms;
   }

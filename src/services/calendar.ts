@@ -270,7 +270,7 @@ const mockCalendarData: CalendarData = {
 
 // API 函数
 export const fetchCalendarData = async (): Promise<CalendarData> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     // 模拟网络延迟
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockCalendarData;
@@ -280,7 +280,7 @@ export const fetchCalendarData = async (): Promise<CalendarData> => {
 };
 
 export const submitMood = async ({ date, mood }: { date: string; mood: MoodData['type'] }) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 500));
     mockCalendarData.days[date] = {
       ...(mockCalendarData.days[date] || {}),
@@ -301,7 +301,7 @@ export const submitMood = async ({ date, mood }: { date: string; mood: MoodData[
 };
 
 export const submitAccuracy = async ({ date, rating }: { date: string; rating: number }) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 500));
     mockCalendarData.days[date] = {
       ...(mockCalendarData.days[date] || {}),

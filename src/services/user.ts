@@ -25,7 +25,7 @@ const mockCharacterInfo: CharacterInfo = {
 
 export const login = async (credentials: { username: string; password: string }) => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     return { token: 'mock-token', userInfo: mockUserInfo };
   }
   // 实际的登录请求
@@ -37,7 +37,7 @@ export const login = async (credentials: { username: string; password: string })
 
 export const logout = async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     return { success: true };
   }
   // 实际的退出登录请求
@@ -48,7 +48,7 @@ export const logout = async () => {
 
 export const fetchUserInfo = async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     return mockUserInfo;
   }
   // 实际的用户信息请求
@@ -57,7 +57,7 @@ export const fetchUserInfo = async () => {
 
 export const fetchBornInfo = async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     return mockBornInfo;
   }
   // 实际的出生信息请求
@@ -66,7 +66,7 @@ export const fetchBornInfo = async () => {
 
 export const fetchCharacterInfo = async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     return mockCharacterInfo;
   }
   // 实际的性格信息请求

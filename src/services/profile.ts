@@ -2,7 +2,7 @@ import { api } from './axios';
 import type { BirthInfo, CharacterAnalysis } from '@/store/profile';
 
 export async function fetchCharacterAnalysis(birthInfo: BirthInfo): Promise<CharacterAnalysis> {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     // Mock response
     await new Promise(resolve => setTimeout(resolve, 1000));
     return {

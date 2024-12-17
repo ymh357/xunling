@@ -44,7 +44,7 @@ const mockData = {
 
 // 服务函数
 export const fetchDailyPoetry = async (): Promise<DailyPoetry> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockData.poetry;
   }
@@ -53,7 +53,7 @@ export const fetchDailyPoetry = async (): Promise<DailyPoetry> => {
 };
 
 export const fetchDailyFortune = async (): Promise<DailyFortune> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockData.fortune;
   }
@@ -62,7 +62,7 @@ export const fetchDailyFortune = async (): Promise<DailyFortune> => {
 };
 
 export const fetchDirectionGuidance = async (): Promise<DirectionGuidance> => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || true) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return mockData.direction;
   }

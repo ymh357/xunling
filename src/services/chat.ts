@@ -33,4 +33,4 @@ const realFetchAIResponse = async (content: string): Promise<string> => {
 
 // 导出统一的请求函数
 export const fetchAIResponse =
-  process.env.NODE_ENV === 'development' ? mockFetchAIResponse : realFetchAIResponse;
+  process.env.NODE_ENV === 'development' || true ? mockFetchAIResponse : realFetchAIResponse;
