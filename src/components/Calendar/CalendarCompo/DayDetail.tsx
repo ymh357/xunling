@@ -47,6 +47,7 @@ const DayDetail = ({ date, dayData, onClose, onSubmitMood, onSubmitAccuracy }: P
               <Text className="text-[#8B4513]">
                 农历：{dayData?.lunarDay}
                 {dayData?.solarTerm && ` · ${dayData.solarTerm}`}
+                {!!dayData?.events?.length && dayData.events.map(event => ` · ${event}`)}
               </Text>
             </View>
 

@@ -77,8 +77,8 @@ const getAccuracyClass = (accuracy?: number) => {
 
   if (accuracy >= 2.5) {
     // 准确度高 - 绿色系
-    if (accuracy >= 4.5) return 'bg-green-500/40';
-    if (accuracy >= 4.0) return 'bg-green-500/35';
+    if (accuracy >= 4.5) return 'bg-green-500/50';
+    if (accuracy >= 4.0) return 'bg-green-500/40';
     if (accuracy >= 3.5) return 'bg-green-500/30';
     if (accuracy >= 3.0) return 'bg-green-500/20';
     return 'bg-green-500/10';
@@ -147,17 +147,17 @@ const Calendar = () => {
         <View
           className={clsx(
             'items-center justify-center p-2 rounded-lg',
+            getAccuracyClass(dayData?.accuracy),
             {
               'bg-[#8B4513]': isSelected,
             },
-            getAccuracyClass(dayData?.accuracy),
             isToday && 'border-2 border-[#8B4513]'
           )}
         >
           <Text
             className={clsx(
               'text-base',
-              isSelected && !dayData?.accuracy ? 'text-[#FDF5E6]' : 'text-[#8B4513]',
+              isSelected ? 'text-[#FDF5E6]' : 'text-[#8B4513]',
               isToday && !isSelected && 'font-bold'
             )}
           >
@@ -172,7 +172,7 @@ const Calendar = () => {
                   'text-[#8B4513] font-medium': subtitleInfo.type === 'solarTerm',
                   'text-[#8B4513]/60': subtitleInfo.type === 'lunar',
                 },
-                isSelected && !dayData?.accuracy && 'text-[#FDF5E6]',
+                isSelected && 'text-[#FDF5E6]',
                 isToday && 'font-medium'
               )}
               numberOfLines={1}
@@ -212,11 +212,11 @@ const Calendar = () => {
 
       {!!detailDate && (
         <DayDetail
-          date={selectedDate}
-          dayData={calendarData?.days[selectedDate]}
+          date={detailDate}
+          dayData={calendarData?.days[detailDate]}
           onClose={() => setDetailDate('')}
-          onSubmitMood={mood => submitMoodMutation({ date: selectedDate, mood })}
-          onSubmitAccuracy={rating => submitAccuracyMutation({ date: selectedDate, rating })}
+          onSubmitMood={mood => submitMoodMutation({ date: detailDate, mood })}
+          onSubmitAccuracy={rating => submitAccuracyMutation({ date: detailDate, rating })}
         />
       )}
     </View>

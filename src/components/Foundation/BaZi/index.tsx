@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import PlaceholderPreview from '@/components/PlaceholderPreview';
 import { useBazi } from '@/store/foundation';
@@ -46,31 +46,33 @@ const ActualComp = () => {
         <Text className="text-xl font-bold text-[#8B4513] ml-2">八字基础</Text>
       </View>
 
-      <View className="flex-row justify-between mb-6">
-        {data.pillars.map((item, index) => (
-          <View key={index} className="items-center w-[80px]">
-            <View
-              className={clsx(
-                'rounded-lg p-2.5 w-full aspect-square items-center justify-center',
-                'bg-gradient-to-b from-[#8B4513]/5 to-[#8B4513]/15',
-                'border border-[#8B4513]/10'
-              )}
-            >
-              <Text className="text-center text-[#8B4513] font-medium text-lg">
-                {item.parts[0]}
-              </Text>
-              <View className="h-px w-8 bg-[#8B4513]/20 my-2" />
-              <Text className="text-center text-[#8B4513] font-medium text-lg">
-                {item.parts[1]}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View className="flex-row justify-between mb-6">
+          {data.pillars.map((item, index) => (
+            <View key={index} className="items-center w-[80px]">
+              <View
+                className={clsx(
+                  'rounded-lg p-2.5 w-full aspect-square items-center justify-center',
+                  'bg-gradient-to-b from-[#8B4513]/5 to-[#8B4513]/15',
+                  'border border-[#8B4513]/10'
+                )}
+              >
+                <Text className="text-center text-[#8B4513] font-medium text-lg">
+                  {item.parts[0]}
+                </Text>
+                <View className="h-px w-8 bg-[#8B4513]/20 my-2" />
+                <Text className="text-center text-[#8B4513] font-medium text-lg">
+                  {item.parts[1]}
+                </Text>
+              </View>
+              <Text className="text-[#8B4513] font-medium mt-2.5">{item.name}</Text>
+              <Text className="text-[#8B4513]/60 text-xs mt-1 text-center" numberOfLines={2}>
+                {item.desc}
               </Text>
             </View>
-            <Text className="text-[#8B4513] font-medium mt-2.5">{item.name}</Text>
-            <Text className="text-[#8B4513]/60 text-xs mt-1 text-center" numberOfLines={2}>
-              {item.desc}
-            </Text>
-          </View>
-        ))}
-      </View>
+          ))}
+        </View>
+      </ScrollView>
 
       <View className="bg-[#8B4513]/10 rounded-lg p-3">
         <Text className="text-[#8B4513] font-medium mb-2">八字基本概念</Text>
