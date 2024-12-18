@@ -34,7 +34,6 @@ const Skeleton = () => (
 
 const ActualComp = () => {
   const { data, isLoading } = useBazi();
-
   if (isLoading || !data) {
     return <Skeleton />;
   }
@@ -49,7 +48,7 @@ const ActualComp = () => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View className="flex-row justify-between mb-6">
           {data.pillars.map((item, index) => (
-            <View key={index} className="items-center w-[80px]">
+            <View key={index} className="items-center w-[80px] mx-1">
               <View
                 className={clsx(
                   'rounded-lg p-2.5 w-full aspect-square items-center justify-center',
