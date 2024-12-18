@@ -18,6 +18,7 @@ export const RootNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="Home"
         screenOptions={{
           headerStyle: {
             backgroundColor: '#8B4513',

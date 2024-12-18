@@ -157,7 +157,7 @@ const Calendar = () => {
           <Text
             className={clsx(
               'text-base',
-              isSelected ? 'text-[#FDF5E6]' : 'text-[#8B4513]',
+              isSelected && !dayData?.accuracy ? 'text-[#FDF5E6]' : 'text-[#8B4513]',
               isToday && !isSelected && 'font-bold'
             )}
           >
@@ -172,7 +172,7 @@ const Calendar = () => {
                   'text-[#8B4513] font-medium': subtitleInfo.type === 'solarTerm',
                   'text-[#8B4513]/60': subtitleInfo.type === 'lunar',
                 },
-                isSelected && 'text-[#FDF5E6]',
+                isSelected && !dayData?.accuracy && 'text-[#FDF5E6]',
                 isToday && 'font-medium'
               )}
               numberOfLines={1}
