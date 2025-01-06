@@ -55,11 +55,11 @@ const DayDetail = ({ date, dayData, onClose, onSubmitMood, onSubmitAccuracy }: P
             <View className="flex-row mb-4">
               <View className="flex-1 bg-[#8B4513]/10 rounded-lg p-3 mr-2">
                 <Text className="text-[#8B4513] font-medium mb-2">宜</Text>
-                <Text className="text-[#8B4513]/70">{dayData?.suitable.join('、') || '无'}</Text>
+                <Text className="text-[#8B4513]/70">{dayData?.suitable?.join('、') || '无'}</Text>
               </View>
               <View className="flex-1 bg-[#8B4513]/10 rounded-lg p-3 ml-2">
                 <Text className="text-[#8B4513] font-medium mb-2">忌</Text>
-                <Text className="text-[#8B4513]/70">{dayData?.unsuitable.join('、') || '无'}</Text>
+                <Text className="text-[#8B4513]/70">{dayData?.unsuitable?.join('、') || '无'}</Text>
               </View>
             </View>
 
@@ -67,17 +67,17 @@ const DayDetail = ({ date, dayData, onClose, onSubmitMood, onSubmitAccuracy }: P
             <View className="bg-[#8B4513]/10 rounded-lg p-3 mb-4">
               <Text className="text-[#8B4513] font-medium mb-2">时辰</Text>
               <Text className="text-[#8B4513]/70">
-                吉时：{dayData?.luckyHours.join('、') || '无'}
+                吉时：{dayData?.luckyHours?.join('、') || '无'}
               </Text>
               <Text className="text-[#8B4513]/70">
-                凶时：{dayData?.unluckyHours.join('、') || '无'}
+                凶时：{dayData?.unluckyHours?.join('、') || '无'}
               </Text>
             </View>
 
             {/* 值日神煞 */}
             <View className="bg-[#8B4513]/10 rounded-lg p-3 mb-4">
               <Text className="text-[#8B4513] font-medium mb-2">值日神煞</Text>
-              <Text className="text-[#8B4513]/70">{dayData?.deities.join('、') || '无'}</Text>
+              <Text className="text-[#8B4513]/70">{dayData?.deities?.join('、') || '无'}</Text>
             </View>
 
             {/* 心情选择器 */}
